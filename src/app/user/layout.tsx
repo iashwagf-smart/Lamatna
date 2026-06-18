@@ -11,13 +11,13 @@ const NAV = [
 
 export default function UserLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen bg-[#F8F5FF]">
+    <div className="flex min-h-screen bg-[#F7F7F7]">
       <PortalSidebar
         navItems={NAV}
         portalLabel="بوابة العملاء"
-        accentColor="#3D3B6E"
-        gradientFrom="#3D3B6E"
-        gradientTo="#5552A0"
+        accentColor="#333369"
+        gradientFrom="#333369"
+        gradientTo="#3A3089"
       />
       <div className="flex-1 mr-[260px] flex flex-col min-h-screen">
         {children}

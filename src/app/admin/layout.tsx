@@ -15,9 +15,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <PortalSidebar
         navItems={NAV}
         portalLabel="لوحة الإدارة"
-        accentColor="#3D3B6E"
-        gradientFrom="#1a1a2e"
-        gradientTo="#3D3B6E"
+        accentColor="#333369"
+        gradientFrom="#333369"
+        gradientTo="#333369"
       />
       <div className="flex-1 mr-[260px] flex flex-col min-h-screen">
         {children}

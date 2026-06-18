@@ -48,18 +48,22 @@ function Counter({ target, suffix, decimals = 0 }: { target: number; suffix: str
 
 export function StatsSection() {
   return (
-    <section className="py-16 px-6">
+    <section style={{ padding: "60px 24px", background: "#fff" }}>
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {STATS.map((stat) => (
+          {STATS.map((stat, i) => (
             <div
               key={stat.label}
-              className="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+              className="ev-card p-6 text-center"
+              style={{ borderTop: `4px solid ${i % 2 === 0 ? "#333369" : "#F8669E"}` }}
             >
-              <div className="text-3xl md:text-4xl font-black mb-2" style={{ color: "#3D3B6E" }}>
+              <div
+                className="text-3xl md:text-4xl font-black mb-2"
+                style={{ color: i % 2 === 0 ? "#333369" : "#F8669E", fontFamily: "'Cairo', 'Inter', sans-serif" }}
+              >
                 <Counter target={stat.value} suffix={stat.suffix} decimals={stat.decimals} />
               </div>
-              <div className="text-sm text-gray-500 font-medium">{stat.label}</div>
+              <div className="text-sm font-medium" style={{ color: "#707070" }}>{stat.label}</div>
             </div>
           ))}
         </div>

@@ -46,7 +46,7 @@ export function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFFBF5] flex flex-col">
+    <div className="min-h-screen bg-[#ffffff] flex flex-col">
       <PatternBar />
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md">
@@ -54,19 +54,19 @@ export function LoginForm() {
             <Link href="/" className="inline-flex items-center gap-2 justify-center">
               <div
                 className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-2xl"
-                style={{ background: "linear-gradient(135deg, #3D3B6E, #5552A0)" }}
+                style={{ background: "linear-gradient(to right, #3A3089, #333369)" }}
               >
                 ل
               </div>
-              <span className="font-black text-2xl" style={{ color: "#3D3B6E" }}>لمتنا</span>
+              <span className="font-black text-2xl" style={{ color: "#333369" }}>لمتنا</span>
             </Link>
-            <h1 className="text-xl font-black mt-4" style={{ color: "#3D3B6E" }}>مرحباً بك</h1>
+            <h1 className="text-xl font-black mt-4" style={{ color: "#333369" }}>مرحباً بك</h1>
             <p className="text-gray-500 text-sm mt-1">سجّل دخولك للمتابعة</p>
           </div>
 
           <button
             onClick={() => signIn("google", { callbackUrl })}
-            className="w-full flex items-center justify-center gap-3 border-2 border-gray-200 rounded-2xl py-3 font-semibold text-gray-700 hover:border-[#3D3B6E] transition-colors mb-4"
+            className="w-full flex items-center justify-center gap-3 border-2 border-gray-200 rounded-2xl py-3 font-semibold text-gray-700 hover:border-[#333369] transition-colors mb-4"
           >
             <span className="text-xl">🔵</span>
             <span>المتابعة بـ Google</span>
@@ -90,13 +90,13 @@ export function LoginForm() {
                   type="tel" dir="ltr" value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+966 5X XXX XXXX"
-                  className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono focus:outline-none focus:border-[#3D3B6E] transition-colors"
+                  className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono focus:outline-none focus:border-[#333369] transition-colors"
                 />
               </div>
               <button
                 onClick={sendOtp} disabled={loading || !phone}
                 className="w-full py-3 rounded-2xl font-bold text-white disabled:opacity-50"
-                style={{ background: "linear-gradient(135deg, #3D3B6E, #5552A0)" }}
+                style={{ background: "linear-gradient(to right, #3A3089, #333369)" }}
               >
                 {loading ? "جارٍ الإرسال..." : "إرسال رمز التحقق"}
               </button>
@@ -110,16 +110,16 @@ export function LoginForm() {
                 type="text" dir="ltr" value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 placeholder="XXXXXX" maxLength={6}
-                className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono text-2xl tracking-widest focus:outline-none focus:border-[#3D3B6E]"
+                className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono text-2xl tracking-widest focus:outline-none focus:border-[#333369]"
               />
               <button
                 onClick={verifyOtp} disabled={loading || otp.length !== 6}
                 className="w-full py-3 rounded-2xl font-bold text-white disabled:opacity-50"
-                style={{ background: "linear-gradient(135deg, #F05A7E, #E91E8C)" }}
+                style={{ background: "linear-gradient(to right, #3A3089, #C83F74)" }}
               >
                 {loading ? "جارٍ التحقق..." : "تحقق ودخول"}
               </button>
-              <button onClick={() => setStep("phone")} className="w-full text-sm text-gray-500 hover:text-[#3D3B6E]">
+              <button onClick={() => setStep("phone")} className="w-full text-sm text-gray-500 hover:text-[#333369]">
                 تعديل رقم الهاتف
               </button>
             </div>
@@ -127,7 +127,7 @@ export function LoginForm() {
 
           <p className="text-center text-sm text-gray-500 mt-6">
             ليس لديك حساب؟{" "}
-            <Link href="/register" className="font-bold" style={{ color: "#F05A7E" }}>
+            <Link href="/register" className="font-bold" style={{ color: "#F8669E" }}>
               أنشئ حساباً الآن
             </Link>
           </p>

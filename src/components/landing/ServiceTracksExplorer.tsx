@@ -10,7 +10,7 @@ const TRACKS = [
     desc: "مسار متكامل لاحتفالية التخرج مع أفضل موردي التصوير والضيافة والقاعات.",
     base: 8000,
     milestones: ["قاعة الحفل", "تصوير فوتوغرافي", "تصوير فيديو", "ضيافة", "ديكور", "ضيوف VIP"],
-    color: "#3D3B6E",
+    color: "#333369",
   },
   {
     id: "wedding",
@@ -19,7 +19,7 @@ const TRACKS = [
     desc: "يومك الأميز — مسار الزفاف الشامل من القاعة حتى الحناء.",
     base: 35000,
     milestones: ["قاعة الزفاف", "الكاتيرينج", "تصوير", "ديكور وزهور", "موسيقى", "مصمم أزياء"],
-    color: "#F05A7E",
+    color: "#F8669E",
   },
   {
     id: "birthday",
@@ -28,7 +28,7 @@ const TRACKS = [
     desc: "احتفل بأجواء مميزة — كيكة، ترفيه، وذكريات لا تُنسى.",
     base: 3000,
     milestones: ["المكان", "الكيكة", "ترفيه أطفال", "ديكور", "مصور"],
-    color: "#FFD040",
+    color: "#C83F74",
   },
   {
     id: "corporate",
@@ -37,7 +37,7 @@ const TRACKS = [
     desc: "يوم مؤسسي احترافي — عروض، ضيافة، وتنظيم على أعلى مستوى.",
     base: 25000,
     milestones: ["قاعة مؤتمرات", "ضيافة ومطعم", "تقنيات عرض", "تسجيل فيديو", "هدايا تذكارية"],
-    color: "#00C5D7",
+    color: "#3A3089",
   },
 ];
 
@@ -52,7 +52,7 @@ export function ServiceTracksExplorer() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-black mb-3" style={{ color: "#3D3B6E" }}>
+          <h1 className="text-4xl font-black mb-3" style={{ color: "#333369" }}>
             مسارات المناسبات
           </h1>
           <p className="text-gray-500 text-lg">
@@ -69,13 +69,13 @@ export function ServiceTracksExplorer() {
                 onClick={() => setSelected(track)}
                 className={`w-full text-right p-4 rounded-2xl border-2 transition-all flex items-center gap-4 ${
                   selected.id === track.id
-                    ? "border-[#3D3B6E] bg-[#F8F5FF]"
+                    ? "border-[#333369] bg-[#F7F7F7]"
                     : "border-gray-200 bg-white hover:border-gray-300"
                 }`}
               >
                 <span className="text-3xl">{track.emoji}</span>
                 <div>
-                  <div className="font-bold text-sm" style={{ color: "#3D3B6E" }}>{track.title}</div>
+                  <div className="font-bold text-sm" style={{ color: "#333369" }}>{track.title}</div>
                   <div className="text-xs text-gray-400">من {track.base.toLocaleString("ar")} ر.س</div>
                 </div>
               </button>
@@ -116,8 +116,8 @@ export function ServiceTracksExplorer() {
             </div>
 
             {/* Estimation Calculator */}
-            <div className="bg-[#F8F5FF] rounded-2xl p-6">
-              <h3 className="font-bold text-[#3D3B6E] mb-4">🧮 حاسبة الميزانية التقريبية</h3>
+            <div className="bg-[#F7F7F7] rounded-2xl p-6">
+              <h3 className="font-bold text-[#333369] mb-4">🧮 حاسبة الميزانية التقريبية</h3>
               <div className="mb-4">
                 <label className="text-sm font-semibold text-gray-600 block mb-2">
                   عدد الضيوف: <strong style={{ color: selected.color }}>{guests}</strong>
@@ -129,7 +129,7 @@ export function ServiceTracksExplorer() {
                   step="10"
                   value={guests}
                   onChange={(e) => setGuests(Number(e.target.value))}
-                  className="w-full accent-[#3D3B6E]"
+                  className="w-full accent-[#333369]"
                 />
                 <div className="flex justify-between text-xs text-gray-400 mt-1">
                   <span>١٠</span><span>٢٥٠</span><span>٥٠٠</span>

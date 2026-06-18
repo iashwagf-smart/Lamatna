@@ -27,10 +27,10 @@ const MOCK_EVENTS = [
 ];
 
 const STATUS_COLORS: Record<string, string> = {
-  DRAFT: "#FFD040",
-  PLANNING: "#00C5D7",
-  LOCKED: "#3D3B6E",
-  ACTIVE: "#F05A7E",
+  DRAFT: "#C83F74",
+  PLANNING: "#3A3089",
+  LOCKED: "#333369",
+  ACTIVE: "#F8669E",
   COMPLETED: "#7CB342",
 };
 const STATUS_LABELS: Record<string, string> = {
@@ -51,7 +51,7 @@ export default function UserDashboard() {
           <Link
             href="/user/events/new"
             className="text-sm font-bold text-white px-5 py-2 rounded-full"
-            style={{ background: "linear-gradient(135deg, #F05A7E, #E91E8C)" }}
+            style={{ background: "linear-gradient(135deg, #F8669E, #C83F74)" }}
           >
             + فعالية جديدة
           </Link>
@@ -62,10 +62,10 @@ export default function UserDashboard() {
         {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: "فعاليات نشطة", value: "٢", color: "#3D3B6E", icon: "🎉" },
-            { label: "إجمالي المجموعات", value: "١٠", color: "#F05A7E", icon: "👥" },
-            { label: "تم جمعه", value: "١٣٬٦٥٠ ر.س", color: "#00C5D7", icon: "💰" },
-            { label: "تقييمي", value: "٤.٩ ⭐", color: "#FFD040", icon: "🏆" },
+            { label: "فعاليات نشطة", value: "٢", color: "#333369", icon: "🎉" },
+            { label: "إجمالي المجموعات", value: "١٠", color: "#F8669E", icon: "👥" },
+            { label: "تم جمعه", value: "١٣٬٦٥٠ ر.س", color: "#3A3089", icon: "💰" },
+            { label: "تقييمي", value: "٤.٩ ⭐", color: "#C83F74", icon: "🏆" },
           ].map((s) => (
             <div key={s.label} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
               <div className="text-2xl mb-2">{s.icon}</div>
@@ -78,10 +78,10 @@ export default function UserDashboard() {
         {/* Active Events */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-black text-lg" style={{ color: "#3D3B6E" }}>
+            <h2 className="font-black text-lg" style={{ color: "#333369" }}>
               دوائري النشطة
             </h2>
-            <Link href="/user/events" className="text-sm text-[#F05A7E] font-semibold">
+            <Link href="/user/events" className="text-sm text-[#F8669E] font-semibold">
               عرض الكل
             </Link>
           </div>
@@ -94,7 +94,7 @@ export default function UserDashboard() {
               >
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h3 className="font-bold text-base" style={{ color: "#3D3B6E" }}>{ev.title}</h3>
+                    <h3 className="font-bold text-base" style={{ color: "#333369" }}>{ev.title}</h3>
                     <p className="text-xs text-gray-400 mt-0.5">{ev.type} · {ev.date}</p>
                   </div>
                   <span
@@ -114,7 +114,7 @@ export default function UserDashboard() {
                   <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all"
-                      style={{ width: `${ev.progress}%`, background: "linear-gradient(90deg, #3D3B6E, #5552A0)" }}
+                      style={{ width: `${ev.progress}%`, background: "linear-gradient(90deg, #333369, #3A3089)" }}
                     />
                   </div>
                 </div>
@@ -123,7 +123,7 @@ export default function UserDashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-xs text-gray-400">القطّة</div>
-                    <div className="text-sm font-bold" style={{ color: "#3D3B6E" }}>
+                    <div className="text-sm font-bold" style={{ color: "#333369" }}>
                       {ev.raised.toLocaleString("ar")} / {ev.budget.toLocaleString("ar")} ر.س
                     </div>
                   </div>
@@ -139,15 +139,15 @@ export default function UserDashboard() {
 
         {/* Quick Actions */}
         <section>
-          <h2 className="font-black text-lg mb-4" style={{ color: "#3D3B6E" }}>
+          <h2 className="font-black text-lg mb-4" style={{ color: "#333369" }}>
             إجراءات سريعة
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { icon: "🎉", label: "فعالية جديدة", href: "/user/events/new", color: "#3D3B6E" },
-              { icon: "🔗", label: "دعوة أصدقاء", href: "#", color: "#F05A7E" },
-              { icon: "🏪", label: "تصفح الموردين", href: "#", color: "#00C5D7" },
-              { icon: "💰", label: "إدارة القطّة", href: "#", color: "#FFD040" },
+              { icon: "🎉", label: "فعالية جديدة", href: "/user/events/new", color: "#333369" },
+              { icon: "🔗", label: "دعوة أصدقاء", href: "#", color: "#F8669E" },
+              { icon: "🏪", label: "تصفح الموردين", href: "#", color: "#3A3089" },
+              { icon: "💰", label: "إدارة القطّة", href: "#", color: "#C83F74" },
             ].map((action) => (
               <Link
                 key={action.label}

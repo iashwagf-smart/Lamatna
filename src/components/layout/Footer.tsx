@@ -1,18 +1,20 @@
 import Link from "next/link";
-import { PatternBar } from "./PatternBar";
 
 export function Footer() {
   return (
-    <footer className="bg-[#3D3B6E] text-white mt-20">
+    <footer className="text-white" style={{ background: "#101010", marginTop: 0 }}>
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-[#3D3B6E] font-black text-xl">
+              <div
+                className="w-10 h-10 flex items-center justify-center font-black text-xl"
+                style={{ background: "linear-gradient(to right, #3A3089, #C83F74)", color: "#fff" }}
+              >
                 ل
               </div>
-              <span className="font-black text-2xl">لمتنا</span>
+              <span className="font-black text-2xl" style={{ fontFamily: "'Cairo', sans-serif" }}>لمتنا</span>
             </div>
             <p className="text-white/70 text-sm leading-relaxed max-w-xs">
               منصة رائدة لتنظيم الفعاليات الاجتماعية والعائلية والمؤسسية بأسلوب تشاركي مبتكر.
@@ -55,16 +57,17 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/40 text-xs">
+        <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+          <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
             © {new Date().getFullYear()} لمتنا. جميع الحقوق محفوظة.
           </p>
-          <div className="flex items-center gap-4 text-white/60 text-sm">
+          <div className="flex items-center gap-4 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
             <span>🇸🇦 المملكة العربية السعودية</span>
           </div>
         </div>
       </div>
-      <PatternBar />
+      {/* Bottom gradient bar */}
+      <div className="h-[5px]" style={{ background: "linear-gradient(to right, #3A3089, #C83F74)" }} />
     </footer>
   );
 }

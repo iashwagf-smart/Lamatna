@@ -6,8 +6,7 @@ const PORTALS = [
     title: "تطبيق العملاء",
     desc: "خطّط فعاليتك، صوّت مع مجموعتك، واجمع التكاليف بـ «قطّة».",
     href: "/user/dashboard",
-    color: "#3D3B6E",
-    bg: "#F8F5FF",
+    accent: "#F8669E",
     cta: "ابدأ التخطيط",
   },
   {
@@ -15,8 +14,7 @@ const PORTALS = [
     title: "بوابة الشركاء",
     desc: "اعرض خدماتك لآلاف العملاء وادر طلباتك وأرباحك بكل سهولة.",
     href: "/partner/dashboard",
-    color: "#F05A7E",
-    bg: "#FFF0F4",
+    accent: "#fff",
     cta: "انضم كشريك",
   },
   {
@@ -24,38 +22,61 @@ const PORTALS = [
     title: "لوحة الإدارة",
     desc: "تحكّم في المنصة، راجع الموردين، وحلّ النزاعات من مكان واحد.",
     href: "/admin/dashboard",
-    color: "#00C5D7",
-    bg: "#F0FDFF",
+    accent: "#F8669E",
     cta: "لوحة التحكم",
   },
 ];
 
 export function PortalsSection() {
   return (
-    <section className="py-16 px-6" style={{ background: "#3D3B6E" }}>
+    <section
+      style={{
+        padding: "80px 24px",
+        background: "linear-gradient(135deg, #333369 0%, #3A3089 60%, #1a1040 100%)",
+      }}
+    >
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-black text-white mb-3">
+        <div className="text-center mb-12">
+          <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: "#F8669E" }}>
+            البوابات
+          </p>
+          <h2
+            className="text-3xl font-black text-white"
+            style={{ fontFamily: "'Cairo', 'Inter', sans-serif" }}
+          >
             ثلاث بوابات، منظومة متكاملة
           </h2>
-          <p className="text-white/60">كل طرف يجد ما يحتاجه في مكانه</p>
+          <p className="mt-3" style={{ color: "rgba(255,255,255,0.6)" }}>كل طرف يجد ما يحتاجه في مكانه</p>
         </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {PORTALS.map((p) => (
+          {PORTALS.map((p, i) => (
             <div
               key={p.title}
-              className="rounded-2xl p-8 flex flex-col items-center text-center"
-              style={{ background: p.bg }}
+              className="p-8 flex flex-col items-center text-center transition-all duration-300"
+              style={{
+                background: i === 1 ? "rgba(248,102,158,0.15)" : "rgba(255,255,255,0.05)",
+                border: `1px solid ${i === 1 ? "rgba(248,102,158,0.4)" : "rgba(255,255,255,0.1)"}`,
+                borderTop: `4px solid ${i === 1 ? "#F8669E" : "rgba(255,255,255,0.2)"}`,
+              }}
             >
-              <div className="text-5xl mb-4">{p.icon}</div>
-              <h3 className="font-black text-xl mb-2" style={{ color: p.color }}>
+              <div
+                className="w-16 h-16 flex items-center justify-center text-3xl mb-6"
+                style={{ background: "rgba(255,255,255,0.1)" }}
+              >
+                {p.icon}
+              </div>
+              <h3
+                className="font-black text-xl mb-3 text-white"
+                style={{ fontFamily: "'Cairo', 'Inter', sans-serif" }}
+              >
                 {p.title}
               </h3>
-              <p className="text-gray-500 text-sm leading-relaxed mb-6">{p.desc}</p>
+              <p className="text-sm leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.6)" }}>{p.desc}</p>
               <Link
                 href={p.href}
-                className="text-sm font-bold text-white px-6 py-2.5 rounded-full transition-transform hover:scale-105"
-                style={{ background: p.color }}
+                className="nir-btn text-sm"
+                style={i === 1 ? { background: "#F8669E" } : {}}
               >
                 {p.cta}
               </Link>

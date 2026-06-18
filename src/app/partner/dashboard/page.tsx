@@ -31,9 +31,9 @@ const MOCK_ORDERS = [
 ];
 
 const STATUS: Record<string, { label: string; color: string }> = {
-  PENDING: { label: "بانتظار القبول", color: "#FFD040" },
-  CONFIRMED: { label: "مؤكد", color: "#00C5D7" },
-  LOCKED: { label: "ضمان مقفل 🔒", color: "#3D3B6E" },
+  PENDING: { label: "بانتظار القبول", color: "#C83F74" },
+  CONFIRMED: { label: "مؤكد", color: "#3A3089" },
+  LOCKED: { label: "ضمان مقفل 🔒", color: "#333369" },
   DELIVERED: { label: "تم التسليم", color: "#7CB342" },
 };
 
@@ -45,10 +45,10 @@ export default function PartnerDashboard() {
         {/* KPIs */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { icon: "📦", label: "طلبات جارية", value: "٣", color: "#F05A7E" },
-            { icon: "💰", label: "أرباح هذا الشهر", value: "١٠٬٨٠٠ ر.س", color: "#3D3B6E" },
-            { icon: "🔒", label: "في الضمان", value: "٦٬٥٠٠ ر.س", color: "#00C5D7" },
-            { icon: "⭐", label: "تقييمي", value: "٤.٨", color: "#FFD040" },
+            { icon: "📦", label: "طلبات جارية", value: "٣", color: "#F8669E" },
+            { icon: "💰", label: "أرباح هذا الشهر", value: "١٠٬٨٠٠ ر.س", color: "#333369" },
+            { icon: "🔒", label: "في الضمان", value: "٦٬٥٠٠ ر.س", color: "#3A3089" },
+            { icon: "⭐", label: "تقييمي", value: "٤.٨", color: "#C83F74" },
           ].map((k) => (
             <div key={k.label} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
               <div className="text-2xl mb-2">{k.icon}</div>
@@ -60,7 +60,7 @@ export default function PartnerDashboard() {
 
         {/* Orders */}
         <section>
-          <h2 className="font-black text-lg mb-4" style={{ color: "#3D3B6E" }}>
+          <h2 className="font-black text-lg mb-4" style={{ color: "#333369" }}>
             الطلبات الحديثة
           </h2>
           <div className="space-y-3">
@@ -70,11 +70,11 @@ export default function PartnerDashboard() {
                 className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center gap-4"
               >
                 <div className="flex-1">
-                  <div className="font-bold" style={{ color: "#3D3B6E" }}>{order.event}</div>
+                  <div className="font-bold" style={{ color: "#333369" }}>{order.event}</div>
                   <div className="text-xs text-gray-400">{order.client} · {order.service} · {order.date}</div>
                 </div>
                 <div className="text-right">
-                  <div className="font-black text-base" style={{ color: "#3D3B6E" }}>
+                  <div className="font-black text-base" style={{ color: "#333369" }}>
                     {order.amount.toLocaleString("ar")} ر.س
                   </div>
                   <span
@@ -87,7 +87,7 @@ export default function PartnerDashboard() {
                 {order.status === "PENDING" && (
                   <button
                     className="text-sm font-bold text-white px-4 py-2 rounded-xl"
-                    style={{ background: "#3D3B6E" }}
+                    style={{ background: "#333369" }}
                   >
                     قبول
                   </button>
@@ -98,7 +98,7 @@ export default function PartnerDashboard() {
         </section>
 
         {/* Escrow Status */}
-        <section className="bg-[#3D3B6E] rounded-2xl p-6 text-white">
+        <section className="bg-[#333369] rounded-2xl p-6 text-white">
           <h2 className="font-black text-lg mb-4">حالة الضمان</h2>
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>

@@ -51,7 +51,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFFBF5] flex flex-col">
+    <div className="min-h-screen bg-[#ffffff] flex flex-col">
       <PatternBar />
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md">
@@ -59,13 +59,13 @@ export default function RegisterPage() {
             <Link href="/" className="inline-flex items-center gap-2 justify-center">
               <div
                 className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-2xl"
-                style={{ background: "linear-gradient(135deg, #3D3B6E, #5552A0)" }}
+                style={{ background: "linear-gradient(to right, #3A3089, #333369)" }}
               >
                 ل
               </div>
-              <span className="font-black text-2xl" style={{ color: "#3D3B6E" }}>لمتنا</span>
+              <span className="font-black text-2xl" style={{ color: "#333369" }}>لمتنا</span>
             </Link>
-            <h1 className="text-xl font-black mt-4" style={{ color: "#3D3B6E" }}>
+            <h1 className="text-xl font-black mt-4" style={{ color: "#333369" }}>
               إنشاء حساب جديد
             </h1>
           </div>
@@ -87,12 +87,12 @@ export default function RegisterPage() {
                     onClick={() => setRole(r.value)}
                     className={`rounded-2xl p-5 border-2 text-center transition-all ${
                       role === r.value
-                        ? "border-[#3D3B6E] bg-[#F8F5FF]"
+                        ? "border-[#333369] bg-[#F7F7F7]"
                         : "border-gray-200 hover:border-gray-300"
                     }`}
                   >
                     <div className="text-3xl mb-2">{r.emoji}</div>
-                    <div className="font-bold text-sm" style={{ color: "#3D3B6E" }}>{r.label}</div>
+                    <div className="font-bold text-sm" style={{ color: "#333369" }}>{r.label}</div>
                     <div className="text-xs text-gray-400 mt-1">{r.desc}</div>
                   </button>
                 ))}
@@ -100,7 +100,7 @@ export default function RegisterPage() {
               <button
                 onClick={() => setStep("details")}
                 className="w-full py-3 rounded-2xl font-bold text-white"
-                style={{ background: "linear-gradient(135deg, #3D3B6E, #5552A0)" }}
+                style={{ background: "linear-gradient(to right, #3A3089, #333369)" }}
               >
                 التالي
               </button>
@@ -115,7 +115,7 @@ export default function RegisterPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="محمد العبدالله"
-                  className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#3D3B6E]"
+                  className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#333369]"
                 />
               </div>
               <div>
@@ -126,14 +126,14 @@ export default function RegisterPage() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+966 5X XXX XXXX"
-                  className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono focus:outline-none focus:border-[#3D3B6E]"
+                  className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono focus:outline-none focus:border-[#333369]"
                 />
               </div>
               <button
                 onClick={handleSubmitDetails}
                 disabled={loading || !name || !phone}
                 className="w-full py-3 rounded-2xl font-bold text-white disabled:opacity-50"
-                style={{ background: "linear-gradient(135deg, #F05A7E, #E91E8C)" }}
+                style={{ background: "linear-gradient(to right, #3A3089, #C83F74)" }}
               >
                 {loading ? "جارٍ..." : "إرسال رمز التحقق"}
               </button>
@@ -152,13 +152,13 @@ export default function RegisterPage() {
                 onChange={(e) => setOtp(e.target.value)}
                 placeholder="XXXXXX"
                 maxLength={6}
-                className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono text-2xl tracking-widest focus:outline-none focus:border-[#3D3B6E]"
+                className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono text-2xl tracking-widest focus:outline-none focus:border-[#333369]"
               />
               <button
                 onClick={handleVerifyOtp}
                 disabled={loading || otp.length !== 6}
                 className="w-full py-3 rounded-2xl font-bold text-white disabled:opacity-50"
-                style={{ background: "linear-gradient(135deg, #3D3B6E, #5552A0)" }}
+                style={{ background: "linear-gradient(to right, #3A3089, #333369)" }}
               >
                 {loading ? "جارٍ التحقق..." : "إنشاء الحساب"}
               </button>
@@ -167,7 +167,7 @@ export default function RegisterPage() {
 
           <p className="text-center text-sm text-gray-500 mt-6">
             لديك حساب بالفعل؟{" "}
-            <Link href="/login" className="font-bold" style={{ color: "#F05A7E" }}>
+            <Link href="/login" className="font-bold" style={{ color: "#F8669E" }}>
               سجّل الدخول
             </Link>
           </p>
