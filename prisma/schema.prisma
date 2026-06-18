@@ -1,0 +1,523 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── IDENTITY ────────────────────────────────────────────────────────────────
+
+model User {
+  id          String   @id @default(cuid())
+  phone       String?  @unique
+  email       String?  @unique
+  name        String
+  avatarUrl   String?
+  role        UserRole @default(CLIENT)
+  verified    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  sessions      Account[]
+  ownedEvents   Event[]              @relation("EventOwner")
+  memberships   EventMember[]
+  votes         Vote[]
+  contributions GattahContribution[]
+  notifications Notification[]
+  otps          OtpToken[]
+  vendor        Vendor?
+}
+
+enum UserRole {
+  CLIENT
+  VENDOR
+  ADMIN
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+}
+
+model OtpToken {
+  id        String   @id @default(cuid())
+  userId    String
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ─── EVENTS / CIRCLES ────────────────────────────────────────────────────────
+
+model Event {
+  id           String      @id @default(cuid())
+  ownerId      String
+  title        String
+  type         EventType
+  date         DateTime
+  budget       Float
+  headcount    Int
+  locationLat  Float?
+  locationLng  Float?
+  locationText String?
+  status       EventStatus @default(DRAFT)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  owner       User          @relation("EventOwner", fields: [ownerId], references: [id])
+  members     EventMember[]
+  milestones  Milestone[]
+  vendorSlots VendorSlot[]
+  polls       Poll[]
+  budgetLines BudgetLine[]
+  gattah      Gattah?
+  escrow      Escrow?
+  orders      Order[]
+}
+
+enum EventType {
+  WEDDING
+  GRADUATION
+  BIRTHDAY
+  CORPORATE
+  FAMILY_GATHERING
+  CUSTOM
+}
+
+enum EventStatus {
+  DRAFT
+  PLANNING
+  LOCKED
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+model EventMember {
+  id          String     @id @default(cuid())
+  eventId     String
+  userId      String
+  role        MemberRole
+  inviteToken String?    @unique
+  joinedAt    DateTime   @default(now())
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id])
+
+  @@unique([eventId, userId])
+}
+
+enum MemberRole {
+  CO_OWNER
+  CONTRIBUTOR
+  VIEWER
+}
+
+// ─── MASAR (MILESTONE ROADMAP) ───────────────────────────────────────────────
+
+model Milestone {
+  id        String          @id @default(cuid())
+  eventId   String
+  title     String
+  category  VendorCategory?
+  dueDate   DateTime?
+  status    MilestoneStatus @default(PENDING)
+  order     Int
+  required  Boolean         @default(true)
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+enum MilestoneStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+  SKIPPED
+}
+
+// ─── VENDOR / CATALOG ────────────────────────────────────────────────────────
+
+model Vendor {
+  id           String         @id @default(cuid())
+  userId       String         @unique
+  businessName String
+  category     VendorCategory
+  description  String?
+  logoUrl      String?
+  coverUrl     String?
+  verifyStatus VerifyStatus   @default(PENDING)
+  rating       Float          @default(0)
+  totalReviews Int            @default(0)
+  coverageCities String[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  user         User          @relation(fields: [userId], references: [id])
+  catalogItems CatalogItem[]
+  orders       Order[]
+  slots        VendorSlot[]
+  earnings     EscrowEntry[]
+}
+
+enum VendorCategory {
+  CATERING
+  VENUE
+  PHOTOGRAPHY
+  DECORATION
+  MUSIC
+  TRANSPORT
+  FLOWERS
+  CAKE
+  ENTERTAINMENT
+  OTHER
+}
+
+enum VerifyStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+model CatalogItem {
+  id          String   @id @default(cuid())
+  vendorId    String
+  name        String
+  description String?
+  price       Float
+  unit        String
+  imageUrl    String?
+  available   Boolean  @default(true)
+  peakSurcharge Float  @default(0)
+  minLeadDays Int      @default(1)
+  expiresAt   DateTime?
+  createdAt   DateTime @default(now())
+
+  vendor Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+}
+
+model VendorSlot {
+  id            String     @id @default(cuid())
+  eventId       String
+  vendorId      String
+  catalogItemId String?
+  status        SlotStatus @default(BROWSING)
+  addedAt       DateTime   @default(now())
+
+  event  Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  vendor Vendor @relation(fields: [vendorId], references: [id])
+}
+
+enum SlotStatus {
+  BROWSING
+  IN_POLL
+  SHORTLISTED
+  BOOKED
+  CANCELLED
+}
+
+// ─── POLLS / VOTING ──────────────────────────────────────────────────────────
+
+model Poll {
+  id        String     @id @default(cuid())
+  eventId   String
+  question  String
+  closedAt  DateTime?
+  status    PollStatus @default(OPEN)
+  createdAt DateTime   @default(now())
+
+  event   Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  options PollOption[]
+  votes   Vote[]
+}
+
+enum PollStatus {
+  OPEN
+  DEADLOCKED
+  HOST_DECIDED
+  CLOSED
+}
+
+model PollOption {
+  id       String  @id @default(cuid())
+  pollId   String
+  label    String
+  imageUrl String?
+  vendorId String?
+
+  poll  Poll   @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes Vote[]
+}
+
+model Vote {
+  id       String   @id @default(cuid())
+  pollId   String
+  optionId String
+  userId   String
+  comment  String?
+  castedAt DateTime @default(now())
+
+  poll   Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  option PollOption @relation(fields: [optionId], references: [id])
+  user   User       @relation(fields: [userId], references: [id])
+
+  @@unique([pollId, userId])
+}
+
+// ─── BUDGET ──────────────────────────────────────────────────────────────────
+
+model BudgetLine {
+  id        String @id @default(cuid())
+  eventId   String
+  category  String
+  allocated Float
+  spent     Float  @default(0)
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+// ─── GATTAH (CROWDFUNDING) ───────────────────────────────────────────────────
+
+model Gattah {
+  id               String          @id @default(cuid())
+  eventId          String          @unique
+  mode             GattahMode
+  targetAmount     Float
+  raisedAmount     Float           @default(0)
+  windowClosesAt   DateTime
+  status           GattahStatus    @default(OPEN)
+  shortfallOption  ShortfallOption?
+  poolLink         String?         @unique
+  createdAt        DateTime        @default(now())
+
+  event         Event                @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  contributions GattahContribution[]
+}
+
+enum GattahMode {
+  EQUAL_SPLIT
+  OPEN_POOL
+  BNPL
+}
+
+enum GattahStatus {
+  OPEN
+  FUNDED
+  SHORTFALL
+  CANCELLED
+}
+
+enum ShortfallOption {
+  ALPHA_HOST_COVERS
+  BETA_AUTO_CANCEL
+}
+
+model GattahContribution {
+  id       String   @id @default(cuid())
+  gattahId String
+  userId   String
+  amount   Float
+  paidAt   DateTime @default(now())
+  stripePaymentIntentId String?
+
+  gattah Gattah @relation(fields: [gattahId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+// ─── ORDERS & ESCROW ─────────────────────────────────────────────────────────
+
+model Order {
+  id        String      @id @default(cuid())
+  eventId   String
+  vendorId  String
+  amount    Float
+  notes     String?
+  status    OrderStatus @default(PENDING)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  event       Event        @relation(fields: [eventId], references: [id])
+  vendor      Vendor       @relation(fields: [vendorId], references: [id])
+  escrowEntry EscrowEntry?
+  dispute     Dispute?
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  LOCKED
+  DELIVERED
+  RELEASED
+  DISPUTED
+  CANCELLED
+}
+
+model Escrow {
+  id          String       @id @default(cuid())
+  eventId     String       @unique
+  totalLocked Float
+  status      EscrowStatus @default(HOLDING)
+  releaseAt   DateTime?
+  createdAt   DateTime     @default(now())
+
+  event   Event         @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  entries EscrowEntry[]
+}
+
+enum EscrowStatus {
+  HOLDING
+  PARTIAL_RELEASE
+  RELEASED
+  FROZEN
+}
+
+model EscrowEntry {
+  id        String      @id @default(cuid())
+  escrowId  String
+  orderId   String      @unique
+  vendorId  String
+  amount    Float
+  status    EntryStatus @default(LOCKED)
+  releasedAt DateTime?
+  stripeTransferId String?
+
+  escrow Escrow @relation(fields: [escrowId], references: [id], onDelete: Cascade)
+  order  Order  @relation(fields: [orderId], references: [id])
+  vendor Vendor @relation(fields: [vendorId], references: [id])
+}
+
+enum EntryStatus {
+  LOCKED
+  DELIVERED
+  RELEASED
+  AUTO_RELEASED
+  DISPUTED
+  REFUNDED
+}
+
+// ─── DISPUTES ────────────────────────────────────────────────────────────────
+
+model Dispute {
+  id         String        @id @default(cuid())
+  orderId    String        @unique
+  raisedById String
+  reason     String
+  evidence   String[]
+  status     DisputeStatus @default(OPEN)
+  resolution String?
+  resolvedAt DateTime?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id])
+}
+
+enum DisputeStatus {
+  OPEN
+  FROZEN
+  EVIDENCE_REVIEW
+  RESOLVED
+  ESCALATED
+}
+
+// ─── NOTIFICATIONS ───────────────────────────────────────────────────────────
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  title     String
+  body      String
+  read      Boolean  @default(false)
+  data      Json?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ─── PLATFORM / ADMIN ────────────────────────────────────────────────────────
+
+model ServiceTrack {
+  id          String    @id @default(cuid())
+  name        String
+  nameAr      String
+  category    EventType
+  description String?
+  basePrice   Float
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+
+  milestoneTemplates MilestoneTemplate[]
+}
+
+model MilestoneTemplate {
+  id         String         @id @default(cuid())
+  trackId    String
+  title      String
+  titleAr    String
+  category   VendorCategory
+  dayOffset  Int
+  required   Boolean        @default(true)
+  budgetPct  Float          @default(0)
+
+  track ServiceTrack @relation(fields: [trackId], references: [id], onDelete: Cascade)
+}
+
+model PartnerApplication {
+  id           String         @id @default(cuid())
+  businessName String
+  contactName  String
+  phone        String
+  email        String
+  category     VendorCategory
+  city         String?
+  notes        String?
+  status       AppStatus      @default(PENDING)
+  createdAt    DateTime       @default(now())
+}
+
+enum AppStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model CorporateLead {
+  id        String   @id @default(cuid())
+  company   String
+  contact   String
+  phone     String
+  email     String
+  eventType String
+  budget    Float?
+  cadence   String?
+  employees Int?
+  notes     String?
+  createdAt DateTime @default(now())
+}
