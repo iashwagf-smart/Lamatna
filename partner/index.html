@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>لمتنا – بوابة المورّد</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --gold:#F05A7E;--gold-light:#FFD0DF;--navy:#3D3B6E;
+      --navy-light:#5552A0;--cream:#FFF8FF;--white:#FFF;
+      --gray:#6B7280;--light:#F8F5FF;--success:#22C55E;
+      --danger:#EF4444;--warn:#F59E0B;--sidebar-w:260px;
+      --coral:#F05A7E;--cyan:#00C5D7;--yellow:#FFD040;
+      --pink:#E91E8C;--orange:#FF6B35;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Cairo',sans-serif;background:#F5F3EF;color:#1a1a2e;display:flex;min-height:100vh;}
+
+    /* SIDEBAR */
+    .sidebar{width:var(--sidebar-w);min-height:100vh;background:linear-gradient(180deg,#C0185A 0%,#7A0035 100%);display:flex;flex-direction:column;position:fixed;right:0;top:0;z-index:50;}
+    .sb-logo{padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.1);}
+    .sb-logo a{display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .sb-logo-icon{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:20px;}
+    .sb-logo-text{font-size:20px;font-weight:900;color:white;}
+    .sb-logo-sub{font-size:11px;color:rgba(255,255,255,0.6);margin-top:2px;}
+    .sb-user{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:10px;}
+    .sb-avatar{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+    .sb-user-name{color:white;font-size:13px;font-weight:700;}
+    .sb-user-role{color:rgba(255,255,255,0.55);font-size:11px;}
+    .sb-verified{display:inline-flex;align-items:center;gap:4px;background:rgba(34,197,94,0.2);color:#4ADE80;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;margin-top:3px;}
+    .sb-nav{flex:1;padding:16px 12px;overflow-y:auto;}
+    .sb-section{font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;padding:10px 8px 6px;}
+    .sb-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:rgba(255,255,255,0.65);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:2px;text-decoration:none;}
+    .sb-item:hover{background:rgba(255,255,255,0.1);color:white;}
+    .sb-item.active{background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.2);}
+    .sb-item .icon{font-size:18px;width:24px;text-align:center;}
+    .sb-badge{margin-right:auto;background:var(--danger);color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;}
+    .sb-badge-gold{background:var(--gold);color:white;}
+    .sb-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.1);}
+    .sb-footer a{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color .2s;}
+    .sb-footer a:hover{color:white;}
+
+    /* MAIN */
+    .main{margin-right:var(--sidebar-w);flex:1;display:flex;flex-direction:column;}
+    .topbar{background:white;border-bottom:1px solid #EDE8E0;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;}
+    .topbar-title{font-size:18px;font-weight:800;color:var(--navy);}
+    .topbar-right{display:flex;align-items:center;gap:10px;}
+    .notif-btn{width:38px;height:38px;border-radius:50%;background:var(--light);border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;position:relative;}
+    .notif-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--danger);border-radius:50%;border:2px solid white;}
+    .content{padding:28px;flex:1;}
+    .btn{padding:9px 20px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:'Cairo',sans-serif;transition:all .2s;}
+    .btn-gold{background:linear-gradient(135deg,var(--coral),var(--pink));color:white;box-shadow:0 4px 12px rgba(240,90,126,0.3);}
+    .btn-gold:hover{transform:translateY(-1px);}
+    .btn-navy{background:var(--navy);color:white;}
+    .btn-outline{background:transparent;border:1.5px solid #EDE8E0;color:var(--navy);}
+    .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+    .btn-sm{padding:6px 14px;font-size:12px;}
+    .btn-success{background:#DCFCE7;color:#16A34A;border:none;}
+    .btn-danger{background:#FEE2E2;color:#DC2626;border:none;}
+
+    /* STATS */
+    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:28px;}
+    .stat-card{background:white;border-radius:16px;padding:20px;border:1px solid #EDE8E0;}
+    .stat-card-icon{font-size:28px;margin-bottom:10px;}
+    .stat-card-val{font-size:26px;font-weight:900;color:var(--navy);}
+    .stat-card-label{font-size:12px;color:var(--gray);margin-top:2px;}
+    .stat-card-trend{font-size:11px;font-weight:700;margin-top:4px;}
+    .trend-up{color:var(--success);}
+    .trend-down{color:var(--danger);}
+
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+    .section-header h3{font-size:17px;font-weight:800;color:var(--navy);}
+
+    /* ORDERS */
+    .orders-list{display:flex;flex-direction:column;gap:12px;}
+    .order-card{background:white;border-radius:16px;border:1px solid #EDE8E0;padding:18px 20px;transition:box-shadow .2s;}
+    .order-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.06);}
+    .order-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+    .order-id{font-size:12px;color:var(--gray);font-weight:600;}
+    .order-status{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;}
+    .s-new{background:#DBEAFE;color:#1D4ED8;}
+    .s-preparing{background:#FEF3C7;color:#D97706;}
+    .s-delivered{background:#DCFCE7;color:#16A34A;}
+    .s-cancelled{background:#FEE2E2;color:#DC2626;}
+    .order-body{display:flex;align-items:center;gap:12px;}
+    .order-emoji{font-size:28px;width:50px;height:50px;background:var(--light);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .order-info{flex:1;}
+    .order-name{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+    .order-meta{font-size:12px;color:var(--gray);display:flex;gap:12px;flex-wrap:wrap;}
+    .order-amount{font-size:18px;font-weight:900;color:var(--gold);flex-shrink:0;}
+    .order-actions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #F5F0EA;}
+
+    /* PRODUCTS */
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;}
+    .product-card{background:white;border-radius:16px;border:1px solid #EDE8E0;overflow:hidden;transition:box-shadow .2s;}
+    .product-card:hover{box-shadow:0 6px 24px rgba(200,145,74,0.12);}
+    .product-img{height:120px;display:flex;align-items:center;justify-content:center;font-size:48px;}
+    .product-img-gold{background:linear-gradient(135deg,#FFF0D8,#F5DDB4);}
+    .product-img-navy{background:linear-gradient(135deg,#E8EDF8,#D0D9EE);}
+    .product-img-green{background:linear-gradient(135deg,#E8F5EE,#C8E8D8);}
+    .product-body{padding:14px;}
+    .product-name{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+    .product-price{font-size:16px;font-weight:900;color:var(--gold);}
+    .product-sold{font-size:11px;color:var(--gray);margin-top:4px;}
+    .product-actions{display:flex;gap:6px;margin-top:10px;}
+
+    /* CHART */
+    .chart-card{background:white;border-radius:16px;border:1px solid #EDE8E0;padding:20px;}
+    .chart-bars{display:flex;align-items:flex-end;gap:8px;height:120px;margin-top:16px;}
+    .chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
+    .chart-bar{width:100%;border-radius:6px 6px 0 0;background:linear-gradient(180deg,var(--coral),var(--pink));transition:height .5s;}
+    .chart-label{font-size:10px;color:var(--gray);text-align:center;}
+
+    /* GRID */
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px;}
+
+    /* MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:none;align-items:center;justify-content:center;}
+    .modal-overlay.open{display:flex;}
+    .modal{background:white;border-radius:24px;width:90%;max-width:520px;max-height:85vh;overflow-y:auto;padding:28px;}
+    .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+    .modal-header h2{font-size:18px;font-weight:900;color:var(--navy);}
+    .modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--gray);}
+    .form-group{margin-bottom:16px;}
+    .form-label{display:block;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+    .form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;border:1.5px solid #EDE8E0;border-radius:10px;font-size:14px;font-family:'Cairo',sans-serif;color:var(--navy);outline:none;transition:border-color .2s;}
+    .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);}
+    .form-textarea{resize:vertical;min-height:70px;}
+
+    @media(max-width:768px){.sidebar{display:none;}.main{margin-right:0;}.grid-2{grid-template-columns:1fr;}.stats-row{grid-template-columns:repeat(2,1fr);}}
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <a href="/">
+      <div class="sb-logo-icon">🏪</div>
+      <div>
+        <div class="sb-logo-text">لمتنا</div>
+        <div class="sb-logo-sub">بوابة المورّد</div>
+      </div>
+    </a>
+  </div>
+  <div class="sb-user">
+    <div class="sb-avatar">🍽️</div>
+    <div class="sb-user-info">
+      <div class="sb-user-name">مطبخ ليلى</div>
+      <div class="sb-user-role">كاتيرينج • الرياض</div>
+      <div class="sb-verified">✓ موثّق</div>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">الرئيسية</div>
+    <a class="sb-item active" onclick="showPage('dashboard',this)">
+      <span class="icon">📊</span> لوحة التحكم
+    </a>
+    <div class="sb-section">الطلبات</div>
+    <a class="sb-item" onclick="showPage('orders',this)">
+      <span class="icon">📦</span> الطلبات الواردة
+      <span class="sb-badge">4</span>
+    </a>
+    <a class="sb-item" onclick="showPage('history',this)">
+      <span class="icon">📋</span> سجل الطلبات
+    </a>
+    <div class="sb-section">المنتجات</div>
+    <a class="sb-item" onclick="showPage('products',this)">
+      <span class="icon">🛍️</span> منتجاتي وخدماتي
+    </a>
+    <a class="sb-item" onclick="showPage('addproduct',this)">
+      <span class="icon">➕</span> إضافة منتج
+    </a>
+    <div class="sb-section">المالية</div>
+    <a class="sb-item" onclick="showPage('finance',this)">
+      <span class="icon">💰</span> الإيرادات والمدفوعات
+    </a>
+    <a class="sb-item" onclick="showPage('reviews',this)">
+      <span class="icon">⭐</span> التقييمات
+    </a>
+    <div class="sb-section">الحساب</div>
+    <a class="sb-item" onclick="showPage('profile',this)">
+      <span class="icon">🏪</span> ملف المنشأة
+    </a>
+    <a class="sb-item" onclick="showPage('settings',this)">
+      <span class="icon">⚙️</span> الإعدادات
+    </a>
+  </nav>
+  <div class="sb-footer">
+    <a href="/">← الموقع الرئيسي</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="page-title">لوحة التحكم</div>
+    <div class="topbar-right">
+      <button class="notif-btn">🔔<div class="notif-dot"></div></button>
+      <button class="btn btn-gold" onclick="showPage('addproduct',null);openProductModal()">+ إضافة منتج</button>
+    </div>
+  </div>
+
+  <div class="content" id="main-content">
+
+    <!-- DASHBOARD -->
+    <div id="page-dashboard">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-card-icon">📦</div>
+          <div class="stat-card-val">4</div>
+          <div class="stat-card-label">طلبات جديدة</div>
+          <div class="stat-card-trend trend-up">↑ تحتاج مراجعة</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">💰</div>
+          <div class="stat-card-val">8,400</div>
+          <div class="stat-card-label">إيراد هذا الشهر (ريال)</div>
+          <div class="stat-card-trend trend-up">↑ 22% عن الشهر الماضي</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">✅</div>
+          <div class="stat-card-val">28</div>
+          <div class="stat-card-label">طلبات مكتملة</div>
+          <div class="stat-card-trend trend-up">↑ هذا الشهر</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">⭐</div>
+          <div class="stat-card-val">4.9</div>
+          <div class="stat-card-label">متوسط التقييم</div>
+          <div class="stat-card-trend trend-up">↑ ممتاز</div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <h3>📦 آخر الطلبات الواردة</h3>
+        <button class="btn btn-outline btn-sm" onclick="showPage('orders',null)">عرض الكل</button>
+      </div>
+      <div class="orders-list">
+        <div class="order-card">
+          <div class="order-header">
+            <span class="order-id">#LMT-2024-0041</span>
+            <span class="order-status s-new">🆕 جديد</span>
+          </div>
+          <div class="order-body">
+            <div class="order-emoji">🎓</div>
+            <div class="order-info">
+              <div class="order-name">كاتيرينج حفلة تخرج</div>
+              <div class="order-meta"><span>👤 ريناد الشمري</span><span>📅 5 يناير 2025</span><span>👥 25 شخص</span></div>
+            </div>
+            <div class="order-amount">750 ر</div>
+          </div>
+          <div class="order-actions">
+            <button class="btn btn-success btn-sm" onclick="acceptOrder(this)">✓ قبول</button>
+            <button class="btn btn-danger btn-sm" onclick="rejectOrder(this)">✕ رفض</button>
+            <button class="btn btn-outline btn-sm">💬 تواصل</button>
+          </div>
+        </div>
+        <div class="order-card">
+          <div class="order-header">
+            <span class="order-id">#LMT-2024-0040</span>
+            <span class="order-status s-preparing">⏳ قيد التحضير</span>
+          </div>
+          <div class="order-body">
+            <div class="order-emoji">🎂</div>
+            <div class="order-info">
+              <div class="order-name">كاتيرينج عيد ميلاد</div>
+              <div class="order-meta"><span>👤 خالد العتيبي</span><span>📅 12 يناير 2025</span><span>👥 15 شخص</span></div>
+            </div>
+            <div class="order-amount">450 ر</div>
+          </div>
+          <div class="order-actions">
+            <button class="btn btn-gold btn-sm" onclick="deliverOrder(this)">🚚 تسليم</button>
+            <button class="btn btn-outline btn-sm">💬 تواصل</button>
+          </div>
+        </div>
+        <div class="order-card">
+          <div class="order-header">
+            <span class="order-id">#LMT-2024-0038</span>
+            <span class="order-status s-delivered">✅ مكتمل</span>
+          </div>
+          <div class="order-body">
+            <div class="order-emoji">💍</div>
+            <div class="order-info">
+              <div class="order-name">كاتيرينج حفلة خطبة</div>
+              <div class="order-meta"><span>👤 منى السالم</span><span>📅 28 ديسمبر 2024</span><span>👥 40 شخص</span></div>
+            </div>
+            <div class="order-amount">1,200 ر</div>
+          </div>
+          <div class="order-actions">
+            <button class="btn btn-outline btn-sm">📄 الفاتورة</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="chart-card">
+          <div class="section-header" style="margin-bottom:0;">
+            <h3>📈 الإيرادات (آخر 6 أشهر)</h3>
+          </div>
+          <div class="chart-bars">
+            <div class="chart-bar-wrap"><div class="chart-bar" style="height:45%"></div><div class="chart-label">يول</div></div>
+            <div class="chart-bar-wrap"><div class="chart-bar" style="height:60%"></div><div class="chart-label">أغس</div></div>
+            <div class="chart-bar-wrap"><div class="chart-bar" style="height:50%"></div><div class="chart-label">سبت</div></div>
+            <div class="chart-bar-wrap"><div class="chart-bar" style="height:75%"></div><div class="chart-label">أكت</div></div>
+            <div class="chart-bar-wrap"><div class="chart-bar" style="height:65%"></div><div class="chart-label">نوف</div></div>
+            <div class="chart-bar-wrap"><div class="chart-bar" style="height:90%"></div><div class="chart-label">ديس</div></div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3 style="font-size:16px;font-weight:800;color:var(--navy);margin-bottom:16px;">⭐ آخر التقييمات</h3>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:var(--light);border-radius:12px;padding:12px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;font-weight:700;color:var(--navy);">ريناد الشمري</span><span style="color:var(--gold);font-size:13px;">⭐⭐⭐⭐⭐</span></div>
+              <p style="font-size:12px;color:var(--gray);">الطعام كان رائع والخدمة ممتازة! شكراً</p>
+            </div>
+            <div style="background:var(--light);border-radius:12px;padding:12px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;font-weight:700;color:var(--navy);">خالد العتيبي</span><span style="color:var(--gold);font-size:13px;">⭐⭐⭐⭐⭐</span></div>
+              <p style="font-size:12px;color:var(--gray);">احترافية عالية وتسليم في الوقت</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS PAGE -->
+    <div id="page-orders" style="display:none;">
+      <div class="section-header"><h3>📦 الطلبات الواردة</h3></div>
+      <div class="orders-list">
+        <div class="order-card"><div class="order-header"><span class="order-id">#LMT-2024-0041</span><span class="order-status s-new">🆕 جديد</span></div><div class="order-body"><div class="order-emoji">🎓</div><div class="order-info"><div class="order-name">كاتيرينج حفلة تخرج</div><div class="order-meta"><span>👤 ريناد</span><span>📅 5 يناير</span><span>👥 25 شخص</span></div></div><div class="order-amount">750 ر</div></div><div class="order-actions"><button class="btn btn-success btn-sm" onclick="acceptOrder(this)">✓ قبول</button><button class="btn btn-danger btn-sm">✕ رفض</button><button class="btn btn-outline btn-sm">💬 تواصل</button></div></div>
+        <div class="order-card"><div class="order-header"><span class="order-id">#LMT-2024-0039</span><span class="order-status s-new">🆕 جديد</span></div><div class="order-body"><div class="order-emoji">🌙</div><div class="order-info"><div class="order-name">كاتيرينج غبقة رمضان</div><div class="order-meta"><span>👤 سلمى الدوسري</span><span>📅 8 يناير</span><span>👥 30 شخص</span></div></div><div class="order-amount">900 ر</div></div><div class="order-actions"><button class="btn btn-success btn-sm" onclick="acceptOrder(this)">✓ قبول</button><button class="btn btn-danger btn-sm">✕ رفض</button><button class="btn btn-outline btn-sm">💬 تواصل</button></div></div>
+        <div class="order-card"><div class="order-header"><span class="order-id">#LMT-2024-0040</span><span class="order-status s-preparing">⏳ قيد التحضير</span></div><div class="order-body"><div class="order-emoji">🎂</div><div class="order-info"><div class="order-name">كاتيرينج عيد ميلاد</div><div class="order-meta"><span>👤 خالد العتيبي</span><span>📅 12 يناير</span><span>👥 15 شخص</span></div></div><div class="order-amount">450 ر</div></div><div class="order-actions"><button class="btn btn-gold btn-sm" onclick="deliverOrder(this)">🚚 تسليم</button><button class="btn btn-outline btn-sm">💬 تواصل</button></div></div>
+        <div class="order-card"><div class="order-header"><span class="order-id">#LMT-2024-0038</span><span class="order-status s-delivered">✅ مكتمل</span></div><div class="order-body"><div class="order-emoji">💍</div><div class="order-info"><div class="order-name">كاتيرينج حفلة خطبة</div><div class="order-meta"><span>👤 منى السالم</span><span>📅 28 ديسمبر</span><span>👥 40 شخص</span></div></div><div class="order-amount">1,200 ر</div></div><div class="order-actions"><button class="btn btn-outline btn-sm">📄 الفاتورة</button></div></div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div id="page-history" style="display:none;"><div style="text-align:center;padding:80px;"><div style="font-size:60px;margin-bottom:16px;">📋</div><h2 style="color:var(--navy);">سجل الطلبات</h2><p style="color:var(--gray);margin-top:12px;">جميع طلباتك المكتملة والملغاة</p></div></div>
+
+    <!-- PRODUCTS -->
+    <div id="page-products" style="display:none;">
+      <div class="section-header"><h3>🛍️ منتجاتي وخدماتي</h3><button class="btn btn-gold btn-sm" onclick="openProductModal()">+ إضافة منتج</button></div>
+      <div class="products-grid">
+        <div class="product-card"><div class="product-img product-img-gold">🍽️</div><div class="product-body"><div class="product-name">باقة كاتيرينج أساسية</div><div class="product-price">450 ريال</div><div class="product-sold">✅ 12 طلب هذا الشهر</div><div class="product-actions"><button class="btn btn-outline btn-sm">تعديل</button><button class="btn btn-danger btn-sm">حذف</button></div></div></div>
+        <div class="product-card"><div class="product-img product-img-navy">🍖</div><div class="product-body"><div class="product-name">باقة مشاوي فاخرة</div><div class="product-price">850 ريال</div><div class="product-sold">✅ 8 طلبات هذا الشهر</div><div class="product-actions"><button class="btn btn-outline btn-sm">تعديل</button><button class="btn btn-danger btn-sm">حذف</button></div></div></div>
+        <div class="product-card"><div class="product-img product-img-green">🥗</div><div class="product-body"><div class="product-name">باقة صحية نباتية</div><div class="product-price">350 ريال</div><div class="product-sold">✅ 5 طلبات هذا الشهر</div><div class="product-actions"><button class="btn btn-outline btn-sm">تعديل</button><button class="btn btn-danger btn-sm">حذف</button></div></div></div>
+        <div class="product-card" style="border:1.5px dashed #EDE8E0;display:flex;align-items:center;justify-content:center;min-height:200px;cursor:pointer;" onclick="openProductModal()"><div style="text-align:center;color:var(--gray);"><div style="font-size:36px;margin-bottom:8px;">➕</div><div style="font-size:13px;font-weight:700;">إضافة منتج جديد</div></div></div>
+      </div>
+    </div>
+
+    <!-- ADD PRODUCT -->
+    <div id="page-addproduct" style="display:none;"><div style="text-align:center;padding:80px;"><div style="font-size:60px;margin-bottom:16px;">➕</div><h2 style="color:var(--navy);">إضافة منتج</h2><p style="color:var(--gray);margin-top:12px;">أضف خدماتك لتظهر للعملاء</p><button class="btn btn-gold" style="margin-top:20px;" onclick="openProductModal()">أضف منتجاً الآن</button></div></div>
+
+    <!-- FINANCE -->
+    <div id="page-finance" style="display:none;">
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-card-icon">💰</div><div class="stat-card-val">8,400</div><div class="stat-card-label">إيراد هذا الشهر</div><div class="stat-card-trend trend-up">↑ 22%</div></div>
+        <div class="stat-card"><div class="stat-card-icon">⏳</div><div class="stat-card-val">1,200</div><div class="stat-card-label">في انتظار التحويل</div><div class="stat-card-trend">قيد المراجعة</div></div>
+        <div class="stat-card"><div class="stat-card-icon">🏦</div><div class="stat-card-val">42,800</div><div class="stat-card-label">إجمالي الإيرادات</div><div class="stat-card-trend trend-up">↑ منذ الانضمام</div></div>
+      </div>
+      <div class="chart-card"><div class="section-header"><h3>📈 الإيرادات الشهرية</h3></div><div class="chart-bars"><div class="chart-bar-wrap"><div class="chart-bar" style="height:45%"></div><div class="chart-label">يول</div></div><div class="chart-bar-wrap"><div class="chart-bar" style="height:60%"></div><div class="chart-label">أغس</div></div><div class="chart-bar-wrap"><div class="chart-bar" style="height:50%"></div><div class="chart-label">سبت</div></div><div class="chart-bar-wrap"><div class="chart-bar" style="height:75%"></div><div class="chart-label">أكت</div></div><div class="chart-bar-wrap"><div class="chart-bar" style="height:65%"></div><div class="chart-label">نوف</div></div><div class="chart-bar-wrap"><div class="chart-bar" style="height:90%"></div><div class="chart-label">ديس</div></div></div></div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div id="page-reviews" style="display:none;">
+      <div class="section-header"><h3>⭐ تقييمات العملاء</h3></div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="background:white;border:1px solid #EDE8E0;border-radius:14px;padding:18px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="font-weight:800;color:var(--navy);">ريناد الشمري</span><span style="color:var(--gold);">⭐⭐⭐⭐⭐</span></div><p style="font-size:13px;color:var(--gray);">الطعام كان رائع والخدمة ممتازة! شكراً جزيلاً</p><div style="font-size:11px;color:#aaa;margin-top:8px;">5 يناير 2025</div></div>
+        <div style="background:white;border:1px solid #EDE8E0;border-radius:14px;padding:18px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="font-weight:800;color:var(--navy);">خالد العتيبي</span><span style="color:var(--gold);">⭐⭐⭐⭐⭐</span></div><p style="font-size:13px;color:var(--gray);">احترافية عالية وتسليم في الوقت المحدد</p><div style="font-size:11px;color:#aaa;margin-top:8px;">12 يناير 2025</div></div>
+        <div style="background:white;border:1px solid #EDE8E0;border-radius:14px;padding:18px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="font-weight:800;color:var(--navy);">منى السالم</span><span style="color:var(--gold);">⭐⭐⭐⭐</span></div><p style="font-size:13px;color:var(--gray);">ممتاز بشكل عام، بس التسليم تأخر شوي</p><div style="font-size:11px;color:#aaa;margin-top:8px;">28 ديسمبر 2024</div></div>
+      </div>
+    </div>
+
+    <div id="page-profile" style="display:none;"><div style="text-align:center;padding:80px;"><div style="font-size:60px;margin-bottom:16px;">🏪</div><h2 style="color:var(--navy);">ملف المنشأة</h2><p style="color:var(--gray);margin-top:12px;">معلومات منشأتك وبياناتها الرسمية</p></div></div>
+    <div id="page-settings" style="display:none;"><div style="text-align:center;padding:80px;"><div style="font-size:60px;margin-bottom:16px;">⚙️</div><h2 style="color:var(--navy);">الإعدادات</h2><p style="color:var(--gray);margin-top:12px;">إدارة إعدادات حسابك وإشعاراتك</p></div></div>
+  </div>
+</main>
+
+<!-- ADD PRODUCT MODAL -->
+<div class="modal-overlay" id="product-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>➕ إضافة منتج / خدمة</h2>
+      <button class="modal-close" onclick="closeProductModal()">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">اسم المنتج أو الخدمة</label>
+      <input class="form-input" type="text" placeholder="مثال: باقة كاتيرينج فاخرة"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">التصنيف</label>
+      <select class="form-select">
+        <option>🍽️ طعام وكاتيرينج</option>
+        <option>📸 تصوير</option>
+        <option>🌸 ورود وديكور</option>
+        <option>🎂 كيك وحلويات</option>
+        <option>🎵 موسيقى وترفيه</option>
+        <option>🏕️ شاليهات وأماكن</option>
+        <option>🎈 بالونات وزينة</option>
+        <option>أخرى</option>
+      </select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-group">
+        <label class="form-label">السعر (ريال)</label>
+        <input class="form-input" type="number" placeholder="مثال: 500"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">أقل كمية / عدد</label>
+        <input class="form-input" type="number" placeholder="مثال: 10 أشخاص"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">وصف الخدمة</label>
+      <textarea class="form-textarea" placeholder="اشرح ما يشمله المنتج أو الخدمة..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">المدن المتاحة</label>
+      <select class="form-select">
+        <option>الرياض</option>
+        <option>جدة</option>
+        <option>الدمام</option>
+        <option>جميع المناطق</option>
+      </select>
+    </div>
+    <button class="btn btn-gold" style="width:100%;padding:13px;font-size:15px;" onclick="addProduct()">✓ إضافة المنتج</button>
+  </div>
+</div>
+
+<script>
+  const pages = ['dashboard','orders','history','products','addproduct','finance','reviews','profile','settings'];
+  const titles = {dashboard:'لوحة التحكم',orders:'الطلبات الواردة',history:'سجل الطلبات',products:'منتجاتي',addproduct:'إضافة منتج',finance:'الإيرادات',reviews:'التقييمات',profile:'ملف المنشأة',settings:'الإعدادات'};
+
+  function showPage(name, el) {
+    pages.forEach(p => { document.getElementById('page-'+p).style.display = p===name?'block':'none'; });
+    document.getElementById('page-title').textContent = titles[name]||name;
+    document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+    if(el) el.classList.add('active');
+  }
+  function openProductModal(){document.getElementById('product-modal').classList.add('open');}
+  function closeProductModal(){document.getElementById('product-modal').classList.remove('open');}
+  function addProduct(){closeProductModal();alert('تم إضافة المنتج بنجاح! ✅');showPage('products',null);}
+  function acceptOrder(btn){btn.closest('.order-card').querySelector('.order-status').className='order-status s-preparing';btn.closest('.order-card').querySelector('.order-status').textContent='⏳ قيد التحضير';btn.closest('.order-actions').innerHTML='<button class="btn btn-gold btn-sm" onclick="deliverOrder(this)">🚚 تسليم</button><button class="btn btn-outline btn-sm">💬 تواصل</button>';}
+  function deliverOrder(btn){btn.closest('.order-card').querySelector('.order-status').className='order-status s-delivered';btn.closest('.order-card').querySelector('.order-status').textContent='✅ مكتمل';btn.closest('.order-actions').innerHTML='<button class="btn btn-outline btn-sm">📄 الفاتورة</button>';}
+  function rejectOrder(btn){btn.closest('.order-card').querySelector('.order-status').className='order-status s-cancelled';btn.closest('.order-card').querySelector('.order-status').textContent='❌ ملغي';btn.closest('.order-actions').innerHTML='';}
+  document.getElementById('product-modal').addEventListener('click',e=>{if(e.target===document.getElementById('product-modal'))closeProductModal();});
+</script>
+</body>
+</html>
