@@ -1,0 +1,197 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap");
+
+:root {
+  --background: #ffffff;
+  --foreground: #333369;
+  /* Eventiz palette */
+  --brand-purple: #333369;
+  --brand-purple-dark: #3A3089;
+  --brand-purple-light: #5552A0;
+  --brand-pink: #F8669E;
+  --brand-pink-dark: #C83F74;
+  --brand-gray: #707070;
+  --brand-light-gray: #F7F7F7;
+  --brand-dark: #101010;
+  --brand-cream: #ffffff;
+  --brand-light: #F7F7F7;
+  /* Gradient */
+  --gradient-main: linear-gradient(to right, #3A3089, #C83F74);
+  --gradient-hover: linear-gradient(to right, #3A3089, #5d0326);
+  /* Pattern bar colors */
+  --pattern-1: #333369;
+  --pattern-2: #F8669E;
+  --pattern-3: #3A3089;
+  --pattern-4: #C83F74;
+  --pattern-5: #707070;
+  --pattern-6: #F8669E;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-cream: var(--brand-cream);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--brand-gray);
+  font-family: 'Cairo', 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cairo', 'Inter', sans-serif;
+  font-weight: 700;
+  color: var(--brand-purple);
+  line-height: 1.22em;
+  margin: 0 0 1rem;
+}
+
+/* Eventiz Button Style */
+.nir-btn {
+  background: var(--brand-pink);
+  color: #fff !important;
+  border-radius: 0px;
+  box-shadow: 0px 0px 0px 4px rgba(255, 255, 255, 0.1);
+  padding: 12px 30px;
+  font-weight: 600;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+.nir-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--brand-purple);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+.nir-btn:hover::before {
+  transform: scaleX(1);
+}
+.nir-btn span, .nir-btn > * {
+  position: relative;
+  z-index: 1;
+}
+
+.nir-btn-dark {
+  background: var(--brand-purple);
+  color: #fff !important;
+  border-radius: 0px;
+  box-shadow: 0px 0px 0px 4px rgba(255, 255, 255, 0.1);
+  padding: 12px 30px;
+  font-weight: 600;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+.nir-btn-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--brand-pink);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+.nir-btn-dark:hover::before {
+  transform: scaleX(1);
+}
+
+/* Eventiz Card Style */
+.ev-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(158, 158, 158, 0.27);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.ev-card:hover {
+  box-shadow: 0 0 30px rgba(158, 158, 158, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Section title ghost text */
+.section-ghost-title {
+  font-family: 'Inter', 'Cairo', sans-serif;
+  font-size: 110px;
+  color: rgba(255, 255, 255, 0);
+  -webkit-text-stroke: 0.2px;
+  -webkit-text-stroke-color: #333369;
+  opacity: 0.12;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Pattern Bar */
+.pattern-bar {
+  display: flex;
+  height: 6px;
+  width: 100%;
+}
+.pattern-bar span {
+  flex: 1;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--brand-purple);
+  border-radius: 3px;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-fade-in-up { animation: fadeInUp 0.6s ease forwards; }
+.animate-slide-in { animation: slideInRight 0.6s ease forwards; }
+
+/* Section spacing */
+section {
+  padding: 80px 0;
+}

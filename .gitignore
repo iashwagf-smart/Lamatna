@@ -1,3 +1,20 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build
+.next/
+out/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Misc
+.DS_Store
+*.log
 LamatnaCo.pptx
-.claude/
-~$*
+~$*.pptx
+.npmrc.json
+.pnpmfile.cjs

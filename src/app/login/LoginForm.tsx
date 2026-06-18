@@ -1,0 +1,138 @@
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { PatternBar } from "@/components/layout/PatternBar";
+
+export function LoginForm() {
+  const router = useRouter();
+  const params = useSearchParams();
+  const callbackUrl = params.get("callbackUrl") || "/user/dashboard";
+
+  const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState("");
+  const [step, setStep] = useState<"phone" | "otp">("phone");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function sendOtp() {
+    if (!phone) return;
+    setLoading(true);
+    setError("");
+    const res = await fetch("/api/auth/send-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone }),
+    });
+    setLoading(false);
+    if (res.ok) setStep("otp");
+    else setError("تعذّر إرسال الرمز. تحقق من رقم الهاتف.");
+  }
+
+  async function verifyOtp() {
+    setLoading(true);
+    setError("");
+    const result = await signIn("phone-otp", {
+      phone,
+      otp,
+      redirect: false,
+      callbackUrl,
+    });
+    setLoading(false);
+    if (result?.ok) router.push(callbackUrl);
+    else setError("الرمز غير صحيح أو منتهي الصلاحية.");
+  }
+
+  return (
+    <div className="min-h-screen bg-[#FFFBF5] flex flex-col">
+      <PatternBar />
+      <div className="flex-1 flex items-center justify-center px-6 py-12">
+        <div className="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md">
+          <div className="text-center mb-8">
+            <Link href="/" className="inline-flex items-center gap-2 justify-center">
+              <div
+                className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-2xl"
+                style={{ background: "linear-gradient(135deg, #3D3B6E, #5552A0)" }}
+              >
+                ل
+              </div>
+              <span className="font-black text-2xl" style={{ color: "#3D3B6E" }}>لمتنا</span>
+            </Link>
+            <h1 className="text-xl font-black mt-4" style={{ color: "#3D3B6E" }}>مرحباً بك</h1>
+            <p className="text-gray-500 text-sm mt-1">سجّل دخولك للمتابعة</p>
+          </div>
+
+          <button
+            onClick={() => signIn("google", { callbackUrl })}
+            className="w-full flex items-center justify-center gap-3 border-2 border-gray-200 rounded-2xl py-3 font-semibold text-gray-700 hover:border-[#3D3B6E] transition-colors mb-4"
+          >
+            <span className="text-xl">🔵</span>
+            <span>المتابعة بـ Google</span>
+          </button>
+
+          <div className="flex items-center gap-3 mb-4">
+            <div className="flex-1 h-px bg-gray-200" />
+            <span className="text-xs text-gray-400">أو برقم الهاتف</span>
+            <div className="flex-1 h-px bg-gray-200" />
+          </div>
+
+          {error && (
+            <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">{error}</div>
+          )}
+
+          {step === "phone" ? (
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-semibold text-gray-700 block mb-2">رقم الجوال</label>
+                <input
+                  type="tel" dir="ltr" value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="+966 5X XXX XXXX"
+                  className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono focus:outline-none focus:border-[#3D3B6E] transition-colors"
+                />
+              </div>
+              <button
+                onClick={sendOtp} disabled={loading || !phone}
+                className="w-full py-3 rounded-2xl font-bold text-white disabled:opacity-50"
+                style={{ background: "linear-gradient(135deg, #3D3B6E, #5552A0)" }}
+              >
+                {loading ? "جارٍ الإرسال..." : "إرسال رمز التحقق"}
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <p className="text-sm text-gray-500 text-center">
+                تم إرسال رمز التحقق إلى <strong dir="ltr">{phone}</strong>
+              </p>
+              <input
+                type="text" dir="ltr" value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                placeholder="XXXXXX" maxLength={6}
+                className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono text-2xl tracking-widest focus:outline-none focus:border-[#3D3B6E]"
+              />
+              <button
+                onClick={verifyOtp} disabled={loading || otp.length !== 6}
+                className="w-full py-3 rounded-2xl font-bold text-white disabled:opacity-50"
+                style={{ background: "linear-gradient(135deg, #F05A7E, #E91E8C)" }}
+              >
+                {loading ? "جارٍ التحقق..." : "تحقق ودخول"}
+              </button>
+              <button onClick={() => setStep("phone")} className="w-full text-sm text-gray-500 hover:text-[#3D3B6E]">
+                تعديل رقم الهاتف
+              </button>
+            </div>
+          )}
+
+          <p className="text-center text-sm text-gray-500 mt-6">
+            ليس لديك حساب؟{" "}
+            <Link href="/register" className="font-bold" style={{ color: "#F05A7E" }}>
+              أنشئ حساباً الآن
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
