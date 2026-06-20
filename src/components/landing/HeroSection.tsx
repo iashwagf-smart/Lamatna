@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export function HeroSection() {
   return (
@@ -93,55 +94,53 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Phone Mockup */}
-          <div className="flex-1 flex justify-center animate-slide-in">
+          {/* Logo + Slogan visual */}
+          <div className="flex-1 flex flex-col items-center justify-center animate-slide-in gap-4">
+            {/* Glowing ring behind logo */}
+            <div className="relative flex items-center justify-center">
+              <div
+                className="absolute w-[280px] h-[280px] rounded-full animate-float"
+                style={{
+                  background: "radial-gradient(circle, rgba(196,104,120,0.25) 0%, rgba(224,120,64,0.1) 50%, transparent 70%)",
+                  filter: "blur(16px)",
+                }}
+              />
+              <div
+                className="absolute w-[220px] h-[220px] rounded-full"
+                style={{
+                  border: "1.5px dashed rgba(255,255,255,0.15)",
+                  animation: "spin 20s linear infinite",
+                }}
+              />
+              <Image
+                src="/logo.png"
+                alt="لمتنا - الله لا يفرق جمعتنا"
+                width={240}
+                height={280}
+                className="relative z-10 drop-shadow-2xl"
+                priority
+              />
+            </div>
+
+            {/* Slogan displayed as a decorative strip */}
             <div
-              className="relative w-64 h-[520px] shadow-2xl overflow-hidden"
+              className="mt-2 px-6 py-3 text-center"
               style={{
-                background: "#fff",
-                border: "8px solid rgba(255,255,255,0.15)",
-                borderRadius: "32px",
+                background: "rgba(255,255,255,0.07)",
+                border: "1px solid rgba(255,255,255,0.15)",
+                backdropFilter: "blur(8px)",
               }}
             >
-              {/* Status bar */}
-              <div className="h-8 flex items-center justify-center" style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)" }}>
-                <div className="w-20 h-2 bg-white/20 rounded-full" />
-              </div>
-              {/* App content mockup */}
-              <div className="p-4 space-y-3" style={{ background: "#F7F7F7" }}>
-                <div className="bg-white p-4 shadow-sm" style={{ borderRadius: "10px", boxShadow: "0 0 20px rgba(158,158,158,0.27)" }}>
-                  <div className="text-xs font-bold mb-1" style={{ color: "#3D3A5C" }}>حفل تخرج نوف 🎓</div>
-                  <div className="h-2 rounded-none overflow-hidden" style={{ background: "#F7F7F7" }}>
-                    <div className="h-full w-3/4" style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)" }} />
-                  </div>
-                  <div className="text-xs mt-1" style={{ color: "#707070" }}>٧٥٪ مكتمل</div>
-                </div>
-
-                <div className="bg-white p-4 shadow-sm" style={{ borderRadius: "10px", boxShadow: "0 0 20px rgba(158,158,158,0.27)" }}>
-                  <div className="text-xs font-bold mb-2" style={{ color: "#C46878" }}>تصويت جاري 🗳️</div>
-                  <div className="space-y-1.5">
-                    {["قاعة النخيل", "فندق الريتز", "قاعة الأميرة"].map((v, i) => (
-                      <div key={v} className="flex items-center gap-2">
-                        <div className="h-5 flex-1 overflow-hidden" style={{ background: "#F7F7F7" }}>
-                          <div
-                            className="h-full"
-                            style={{
-                              width: `${[65, 25, 10][i]}%`,
-                              background: ["#3D3A5C", "#C46878", "#3D3A5C"][i],
-                            }}
-                          />
-                        </div>
-                        <span className="text-xs w-6" style={{ color: "#707070" }}>{[65, 25, 10][i]}%</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="p-4 text-white" style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)", borderRadius: "10px" }}>
-                  <div className="text-xs opacity-70 mb-1">الميزانية المجمّعة</div>
-                  <div className="text-lg font-black">١٢٬٥٠٠ ر.س</div>
-                  <div className="text-xs opacity-60 mt-1">من ٨ مشاركين</div>
-                </div>
+              <p
+                className="text-xl font-bold tracking-wide"
+                style={{ color: "rgba(255,255,255,0.9)", fontFamily: "'ExpoArabic', 'Cairo', sans-serif", letterSpacing: "0.05em" }}
+              >
+                الله لا يفرق جمعتنا
+              </p>
+              <div className="flex justify-center gap-1.5 mt-2">
+                {["#C46878", "#E07840", "#F0C040", "#594E6A", "#3D3A5C"].map((c) => (
+                  <span key={c} className="w-4 h-1" style={{ background: c }} />
+                ))}
               </div>
             </div>
           </div>

@@ -35,10 +35,10 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/logo.png"
+              src="/logo-circle.png"
               alt="لمتنا"
-              width={44}
-              height={44}
+              width={52}
+              height={52}
               className="object-contain"
               priority
             />
