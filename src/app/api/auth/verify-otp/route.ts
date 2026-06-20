@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { signIn } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
-  const { phone, otp } = await req.json();
+  const { email, otp } = await req.json();
 
-  if (!phone || !otp) {
+  if (!email || !otp) {
     return NextResponse.json({ error: "البيانات ناقصة" }, { status: 400 });
   }
 
-  const user = await prisma.user.findUnique({ where: { phone } });
+  const user = await prisma.user.findUnique({ where: { email } });
   if (!user) return NextResponse.json({ error: "مستخدم غير موجود" }, { status: 404 });
 
   const token = await prisma.otpToken.findFirst({

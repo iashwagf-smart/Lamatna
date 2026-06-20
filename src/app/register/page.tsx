@@ -12,19 +12,19 @@ export default function RegisterPage() {
   const [step, setStep] = useState<"role" | "details" | "otp">("role");
   const [role, setRole] = useState<Role>("CLIENT");
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   async function handleSubmitDetails() {
-    if (!name || !phone) return;
+    if (!name || !email) return;
     setLoading(true);
     setError("");
     const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, phone, role }),
+      body: JSON.stringify({ name, email, role }),
     });
     setLoading(false);
     if (res.ok) setStep("otp");
@@ -40,7 +40,7 @@ export default function RegisterPage() {
     const res = await fetch("/api/auth/verify-otp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone, otp }),
+      body: JSON.stringify({ email, otp }),
     });
     setLoading(false);
     if (res.ok) {
@@ -119,19 +119,19 @@ export default function RegisterPage() {
                 />
               </div>
               <div>
-                <label className="text-sm font-semibold text-gray-700 block mb-2">رقم الجوال</label>
+                <label className="text-sm font-semibold text-gray-700 block mb-2">البريد الإلكتروني</label>
                 <input
-                  type="tel"
+                  type="email"
                   dir="ltr"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+966 5X XXX XXXX"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="example@email.com"
                   className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono focus:outline-none focus:border-[#3D3A5C]"
                 />
               </div>
               <button
                 onClick={handleSubmitDetails}
-                disabled={loading || !name || !phone}
+                disabled={loading || !name || !email}
                 className="w-full py-3 rounded-2xl font-bold text-white disabled:opacity-50"
                 style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)" }}
               >
@@ -143,7 +143,7 @@ export default function RegisterPage() {
           {step === "otp" && (
             <div className="space-y-4">
               <p className="text-sm text-gray-500 text-center">
-                تم إرسال رمز التحقق إلى <strong dir="ltr">{phone}</strong>
+                تم إرسال رمز التحقق إلى <strong dir="ltr">{email}</strong>
               </p>
               <input
                 type="text"

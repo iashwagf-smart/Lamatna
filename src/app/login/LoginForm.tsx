@@ -11,31 +11,31 @@ export function LoginForm() {
   const params = useSearchParams();
   const callbackUrl = params.get("callbackUrl") || "/user/dashboard";
 
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [step, setStep] = useState<"phone" | "otp">("phone");
+  const [step, setStep] = useState<"email" | "otp">("email");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   async function sendOtp() {
-    if (!phone) return;
+    if (!email) return;
     setLoading(true);
     setError("");
     const res = await fetch("/api/auth/send-otp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone }),
+      body: JSON.stringify({ email }),
     });
     setLoading(false);
     if (res.ok) setStep("otp");
-    else setError("تعذّر إرسال الرمز. تحقق من رقم الهاتف.");
+    else setError("تعذّر إرسال الرمز. تحقق من بريدك الإلكتروني.");
   }
 
   async function verifyOtp() {
     setLoading(true);
     setError("");
-    const result = await signIn("phone-otp", {
-      phone,
+    const result = await signIn("email-otp", {
+      email,
       otp,
       redirect: false,
       callbackUrl,
@@ -74,7 +74,7 @@ export function LoginForm() {
 
           <div className="flex items-center gap-3 mb-4">
             <div className="flex-1 h-px bg-gray-200" />
-            <span className="text-xs text-gray-400">أو برقم الهاتف</span>
+            <span className="text-xs text-gray-400">أو بالبريد الإلكتروني</span>
             <div className="flex-1 h-px bg-gray-200" />
           </div>
 
@@ -82,21 +82,21 @@ export function LoginForm() {
             <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">{error}</div>
           )}
 
-          {step === "phone" ? (
+          {step === "email" ? (
             <div className="space-y-4">
               <div>
-                <label className="text-sm font-semibold text-gray-700 block mb-2">رقم الجوال</label>
+                <label className="text-sm font-semibold text-gray-700 block mb-2">البريد الإلكتروني</label>
                 <input
-                  type="tel" dir="ltr" value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+966 5X XXX XXXX"
+                  type="email" dir="ltr" value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="example@email.com"
                   className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono focus:outline-none focus:border-[#3D3A5C] transition-colors"
                 />
               </div>
               <button
-                onClick={sendOtp} disabled={loading || !phone}
+                onClick={sendOtp} disabled={loading || !email}
                 className="w-full py-3 rounded-2xl font-bold text-white disabled:opacity-50"
-                style={{ background: "linear-gradient(to right, #3D3A5C, #3D3A5C)" }}
+                style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)" }}
               >
                 {loading ? "جارٍ الإرسال..." : "إرسال رمز التحقق"}
               </button>
@@ -104,7 +104,7 @@ export function LoginForm() {
           ) : (
             <div className="space-y-4">
               <p className="text-sm text-gray-500 text-center">
-                تم إرسال رمز التحقق إلى <strong dir="ltr">{phone}</strong>
+                تم إرسال رمز التحقق إلى <strong dir="ltr">{email}</strong>
               </p>
               <input
                 type="text" dir="ltr" value={otp}
@@ -119,8 +119,8 @@ export function LoginForm() {
               >
                 {loading ? "جارٍ التحقق..." : "تحقق ودخول"}
               </button>
-              <button onClick={() => setStep("phone")} className="w-full text-sm text-gray-500 hover:text-[#3D3A5C]">
-                تعديل رقم الهاتف
+              <button onClick={() => setStep("email")} className="w-full text-sm text-gray-500 hover:text-[#3D3A5C]">
+                تعديل البريد الإلكتروني
               </button>
             </div>
           )}

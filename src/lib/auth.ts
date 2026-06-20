@@ -10,17 +10,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     Credentials({
-      id: "phone-otp",
-      name: "Phone OTP",
+      id: "email-otp",
+      name: "Email OTP",
       credentials: {
-        phone: { label: "Phone", type: "text" },
+        email: { label: "Email", type: "email" },
         otp: { label: "OTP", type: "text" },
       },
       async authorize(credentials) {
-        const { phone, otp } = credentials as { phone: string; otp: string };
-        if (!phone || !otp) return null;
+        const { email, otp } = credentials as { email: string; otp: string };
+        if (!email || !otp) return null;
 
-        const user = await prisma.user.findUnique({ where: { phone } });
+        const user = await prisma.user.findUnique({ where: { email } });
         if (!user) return null;
 
         const token = await prisma.otpToken.findFirst({
