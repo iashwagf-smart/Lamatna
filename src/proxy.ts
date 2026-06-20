@@ -37,11 +37,8 @@ export async function proxy(req: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  const role = token.role as string | undefined;
+  const role = (token.role as string | undefined) ?? "CLIENT";
 
-  if (pathname.startsWith("/user") && role !== "CLIENT") {
-    return NextResponse.redirect(new URL("/login?error=unauthorized", req.url));
-  }
   if (pathname.startsWith("/partner") && role !== "VENDOR") {
     return NextResponse.redirect(new URL("/login?error=unauthorized", req.url));
   }
