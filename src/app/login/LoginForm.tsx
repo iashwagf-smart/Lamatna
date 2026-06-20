@@ -34,11 +34,17 @@ export function LoginForm() {
   async function verifyOtp() {
     setLoading(true);
     setError("");
-    await signIn("email-otp", {
+    const result = await signIn("email-otp", {
       email,
       otp,
-      redirectTo: callbackUrl,
+      redirect: false,
     });
+    setLoading(false);
+    if (result?.error) {
+      setError("الرمز غير صحيح أو منتهي الصلاحية.");
+    } else {
+      window.location.href = callbackUrl;
+    }
   }
 
   return (

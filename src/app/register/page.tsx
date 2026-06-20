@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { PatternBar } from "@/components/layout/PatternBar";
 
 type Role = "CLIENT" | "VENDOR";
@@ -37,16 +38,16 @@ export default function RegisterPage() {
   async function handleVerifyOtp() {
     setLoading(true);
     setError("");
-    const res = await fetch("/api/auth/verify-otp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, otp }),
+    const result = await signIn("email-otp", {
+      email,
+      otp,
+      redirect: false,
     });
     setLoading(false);
-    if (res.ok) {
-      router.push(role === "VENDOR" ? "/partner/dashboard" : "/user/dashboard");
+    if (result?.error) {
+      setError("الرمز غير صحيح أو منتهي الصلاحية.");
     } else {
-      setError("الرمز غير صحيح");
+      window.location.href = role === "VENDOR" ? "/partner/dashboard" : "/user/dashboard";
     }
   }
 
