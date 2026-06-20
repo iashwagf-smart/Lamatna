@@ -41,7 +41,7 @@ export function LoginForm() {
       callbackUrl,
     });
     setLoading(false);
-    if (result?.ok) router.push(callbackUrl);
+    if (result?.ok) window.location.href = callbackUrl;
     else setError("الرمز غير صحيح أو منتهي الصلاحية.");
   }
 
