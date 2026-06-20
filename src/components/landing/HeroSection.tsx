@@ -6,7 +6,7 @@ export function HeroSection() {
   return (
     <section
       className="relative overflow-hidden pt-16 pb-24 px-6"
-      style={{ background: "linear-gradient(135deg, #333369 0%, #3A3089 60%, #1a1040 100%)" }}
+      style={{ background: "linear-gradient(135deg, #3D3A5C 0%, #3D3A5C 60%, #1a1040 100%)" }}
     >
       {/* Ghost large text */}
       <div
@@ -39,7 +39,7 @@ export function HeroSection() {
           <div className="flex-1 text-center md:text-right animate-fade-in-up">
             <div
               className="inline-flex items-center gap-2 text-xs font-bold px-4 py-2 mb-8"
-              style={{ background: "rgba(248,102,158,0.2)", color: "#F8669E", borderLeft: "3px solid #F8669E" }}
+              style={{ background: "rgba(248,102,158,0.2)", color: "#C46878", borderLeft: "3px solid #C46878" }}
             >
               ✨ منصة التخطيط الجماعي الأولى في المملكة
             </div>
@@ -49,7 +49,7 @@ export function HeroSection() {
               style={{ fontSize: "clamp(36px, 6vw, 70px)", fontFamily: "'Cairo', 'Inter', sans-serif" }}
             >
               فعاليتك المثالية{" "}
-              <span style={{ color: "#F8669E" }}>معاً</span>
+              <span style={{ color: "#C46878" }}>معاً</span>
             </h1>
 
             <p className="text-lg mb-10 leading-relaxed max-w-lg mx-auto md:mx-0" style={{ color: "rgba(255,255,255,0.7)" }}>
@@ -104,21 +104,21 @@ export function HeroSection() {
               }}
             >
               {/* Status bar */}
-              <div className="h-8 flex items-center justify-center" style={{ background: "linear-gradient(to right, #3A3089, #C83F74)" }}>
+              <div className="h-8 flex items-center justify-center" style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)" }}>
                 <div className="w-20 h-2 bg-white/20 rounded-full" />
               </div>
               {/* App content mockup */}
               <div className="p-4 space-y-3" style={{ background: "#F7F7F7" }}>
                 <div className="bg-white p-4 shadow-sm" style={{ borderRadius: "10px", boxShadow: "0 0 20px rgba(158,158,158,0.27)" }}>
-                  <div className="text-xs font-bold mb-1" style={{ color: "#333369" }}>حفل تخرج نوف 🎓</div>
+                  <div className="text-xs font-bold mb-1" style={{ color: "#3D3A5C" }}>حفل تخرج نوف 🎓</div>
                   <div className="h-2 rounded-none overflow-hidden" style={{ background: "#F7F7F7" }}>
-                    <div className="h-full w-3/4" style={{ background: "linear-gradient(to right, #3A3089, #C83F74)" }} />
+                    <div className="h-full w-3/4" style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)" }} />
                   </div>
                   <div className="text-xs mt-1" style={{ color: "#707070" }}>٧٥٪ مكتمل</div>
                 </div>
 
                 <div className="bg-white p-4 shadow-sm" style={{ borderRadius: "10px", boxShadow: "0 0 20px rgba(158,158,158,0.27)" }}>
-                  <div className="text-xs font-bold mb-2" style={{ color: "#F8669E" }}>تصويت جاري 🗳️</div>
+                  <div className="text-xs font-bold mb-2" style={{ color: "#C46878" }}>تصويت جاري 🗳️</div>
                   <div className="space-y-1.5">
                     {["قاعة النخيل", "فندق الريتز", "قاعة الأميرة"].map((v, i) => (
                       <div key={v} className="flex items-center gap-2">
@@ -127,7 +127,7 @@ export function HeroSection() {
                             className="h-full"
                             style={{
                               width: `${[65, 25, 10][i]}%`,
-                              background: ["#333369", "#F8669E", "#3A3089"][i],
+                              background: ["#3D3A5C", "#C46878", "#3D3A5C"][i],
                             }}
                           />
                         </div>
@@ -137,7 +137,7 @@ export function HeroSection() {
                   </div>
                 </div>
 
-                <div className="p-4 text-white" style={{ background: "linear-gradient(to right, #3A3089, #C83F74)", borderRadius: "10px" }}>
+                <div className="p-4 text-white" style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)", borderRadius: "10px" }}>
                   <div className="text-xs opacity-70 mb-1">الميزانية المجمّعة</div>
                   <div className="text-lg font-black">١٢٬٥٠٠ ر.س</div>
                   <div className="text-xs opacity-60 mt-1">من ٨ مشاركين</div>

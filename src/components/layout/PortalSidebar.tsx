@@ -41,7 +41,7 @@ export function PortalSidebar({
           ل
         </div>
         <div>
-          <div className="font-black text-lg" style={{ color: "#333369" }}>لمتنا</div>
+          <div className="font-black text-lg" style={{ color: "#3D3A5C" }}>لمتنا</div>
           <div className="text-xs text-gray-400">{portalLabel}</div>
         </div>
       </div>
@@ -83,7 +83,7 @@ export function PortalSidebar({
             {session?.user?.name?.charAt(0) ?? "م"}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="font-bold text-sm truncate" style={{ color: "#333369" }}>
+            <div className="font-bold text-sm truncate" style={{ color: "#3D3A5C" }}>
               {session?.user?.name ?? "المستخدم"}
             </div>
             <div className="text-xs text-gray-400 truncate">{session?.user?.email ?? ""}</div>

@@ -10,7 +10,7 @@ export function Footer() {
             <div className="flex items-center gap-2 mb-4">
               <div
                 className="w-10 h-10 flex items-center justify-center font-black text-xl"
-                style={{ background: "linear-gradient(to right, #3A3089, #C83F74)", color: "#fff" }}
+                style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)", color: "#fff" }}
               >
                 ل
               </div>
@@ -67,7 +67,7 @@ export function Footer() {
         </div>
       </div>
       {/* Bottom gradient bar */}
-      <div className="h-[5px]" style={{ background: "linear-gradient(to right, #3A3089, #C83F74)" }} />
+      <div className="h-[5px]" style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)" }} />
     </footer>
   );
 }

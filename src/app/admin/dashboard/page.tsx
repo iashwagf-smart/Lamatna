@@ -1,12 +1,12 @@
 import { PortalTopbar } from "@/components/layout/PortalTopbar";
 
 const KPIs = [
-  { label: "إجمالي المبيعات (GMV)", value: "٤٢٠٬٠٠٠ ر.س", icon: "💹", color: "#333369", delta: "+١٢% هذا الشهر" },
-  { label: "ضمانات نشطة", value: "٢٣", icon: "🔒", color: "#F8669E", delta: "٦ تنتهي قريباً" },
-  { label: "نزاعات مفتوحة", value: "٢", icon: "⚖️", color: "#C83F74", delta: "ضمن ٤٨ ساعة" },
-  { label: "موردون ينتظرون", value: "٧", icon: "🏪", color: "#3A3089", delta: "بانتظار المراجعة" },
-  { label: "فعاليات هذا الشهر", value: "٨٤", icon: "🎉", color: "#C83F74", delta: "+٢٣% عن الشهر الماضي" },
-  { label: "العملاء النشطون", value: "٢٬٣٤١", icon: "👥", color: "#F8669E", delta: "١٢٣ جديد هذا الأسبوع" },
+  { label: "إجمالي المبيعات (GMV)", value: "٤٢٠٬٠٠٠ ر.س", icon: "💹", color: "#3D3A5C", delta: "+١٢% هذا الشهر" },
+  { label: "ضمانات نشطة", value: "٢٣", icon: "🔒", color: "#C46878", delta: "٦ تنتهي قريباً" },
+  { label: "نزاعات مفتوحة", value: "٢", icon: "⚖️", color: "#C46878", delta: "ضمن ٤٨ ساعة" },
+  { label: "موردون ينتظرون", value: "٧", icon: "🏪", color: "#3D3A5C", delta: "بانتظار المراجعة" },
+  { label: "فعاليات هذا الشهر", value: "٨٤", icon: "🎉", color: "#C46878", delta: "+٢٣% عن الشهر الماضي" },
+  { label: "العملاء النشطون", value: "٢٬٣٤١", icon: "👥", color: "#C46878", delta: "١٢٣ جديد هذا الأسبوع" },
 ];
 
 const RECENT_EVENTS = [
@@ -52,10 +52,10 @@ export default function AdminDashboard() {
         {/* Pending Vendor Approvals */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-black text-lg" style={{ color: "#333369" }}>
+            <h2 className="font-black text-lg" style={{ color: "#3D3A5C" }}>
               موردون ينتظرون الموافقة
             </h2>
-            <span className="bg-[#F8669E] text-white text-xs font-bold px-3 py-1 rounded-full">
+            <span className="bg-[#C46878] text-white text-xs font-bold px-3 py-1 rounded-full">
               ٧ طلبات
             </span>
           </div>
@@ -68,18 +68,18 @@ export default function AdminDashboard() {
               <div key={v.name} className="bg-white rounded-2xl p-4 border border-gray-100 flex items-center gap-4">
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-black text-lg"
-                  style={{ background: "linear-gradient(135deg, #333369, #3A3089)" }}
+                  style={{ background: "linear-gradient(135deg, #3D3A5C, #3D3A5C)" }}
                 >
                   {v.name.charAt(0)}
                 </div>
                 <div className="flex-1">
-                  <div className="font-bold text-sm" style={{ color: "#333369" }}>{v.name}</div>
+                  <div className="font-bold text-sm" style={{ color: "#3D3A5C" }}>{v.name}</div>
                   <div className="text-xs text-gray-400">{v.category} · {v.city} · {v.applied}</div>
                 </div>
                 <div className="flex gap-2">
                   <button
                     className="text-xs font-bold text-white px-3 py-1.5 rounded-lg"
-                    style={{ background: "#333369" }}
+                    style={{ background: "#3D3A5C" }}
                   >
                     موافقة
                   </button>
@@ -94,7 +94,7 @@ export default function AdminDashboard() {
 
         {/* Recent Events */}
         <section>
-          <h2 className="font-black text-lg mb-4" style={{ color: "#333369" }}>
+          <h2 className="font-black text-lg mb-4" style={{ color: "#3D3A5C" }}>
             فعاليات حديثة
           </h2>
           <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
@@ -111,14 +111,14 @@ export default function AdminDashboard() {
               <tbody>
                 {RECENT_EVENTS.map((ev) => (
                   <tr key={ev.title} className="border-t border-gray-50 hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 font-semibold" style={{ color: "#333369" }}>{ev.title}</td>
+                    <td className="px-4 py-3 font-semibold" style={{ color: "#3D3A5C" }}>{ev.title}</td>
                     <td className="px-4 py-3 text-gray-500">{ev.type}</td>
                     <td className="px-4 py-3 font-bold text-gray-700">{ev.amount} ر.س</td>
                     <td className="px-4 py-3">
                       <span className={`text-xs font-bold px-2 py-1 rounded-full ${
-                        ev.status === "ACTIVE" ? "bg-[#F8669E]/10 text-[#F8669E]" :
-                        ev.status === "LOCKED" ? "bg-[#333369]/10 text-[#333369]" :
-                        "bg-[#3A3089]/10 text-[#3A3089]"
+                        ev.status === "ACTIVE" ? "bg-[#C46878]/10 text-[#C46878]" :
+                        ev.status === "LOCKED" ? "bg-[#3D3A5C]/10 text-[#3D3A5C]" :
+                        "bg-[#3D3A5C]/10 text-[#3D3A5C]"
                       }`}>
                         {ev.status === "ACTIVE" ? "نشط" : ev.status === "LOCKED" ? "مقفل" : "قيد التخطيط"}
                       </span>

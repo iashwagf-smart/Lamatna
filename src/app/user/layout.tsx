@@ -15,9 +15,9 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
       <PortalSidebar
         navItems={NAV}
         portalLabel="بوابة العملاء"
-        accentColor="#333369"
-        gradientFrom="#333369"
-        gradientTo="#3A3089"
+        accentColor="#3D3A5C"
+        gradientFrom="#3D3A5C"
+        gradientTo="#3D3A5C"
       />
       <div className="flex-1 mr-[260px] flex flex-col min-h-screen">
         {children}

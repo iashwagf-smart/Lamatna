@@ -3,37 +3,37 @@ const STEPS = [
     num: "١",
     title: "أنشئ دائرتك",
     desc: "اختر نوع المناسبة وادعُ عائلتك وأصدقاءك للانضمام بدور محدد.",
-    accent: "#333369",
+    accent: "#3D3A5C",
   },
   {
     num: "٢",
     title: "حدد المسار",
     desc: "المنصة تولّد خارطة طريق بالمراحل الأساسية — قاعة، ضيافة، تصوير وأكثر.",
-    accent: "#F8669E",
+    accent: "#C46878",
   },
   {
     num: "٣",
     title: "صوّت معاً",
     desc: "أضف خيارات الموردين لصندوق التصويت، ودع المجموعة تختار الأفضل.",
-    accent: "#3A3089",
+    accent: "#3D3A5C",
   },
   {
     num: "٤",
     title: "اجمع بـ «قطّة»",
     desc: "وزّع التكلفة بالتساوي أو افتح رابط تبرع مفتوح لجميع المدعوين.",
-    accent: "#C83F74",
+    accent: "#C46878",
   },
   {
     num: "٥",
     title: "أغلق بالضمان",
     desc: "الأموال محفوظة في الضمان ولا تُحرَّر للمورد إلا بعد تأكيد التسليم.",
-    accent: "#333369",
+    accent: "#3D3A5C",
   },
   {
     num: "٦",
     title: "استمتع وقيّم",
     desc: "تابع كل شيء يوم الفعالية وأطلق المدفوعات مع نجاح كل مرحلة.",
-    accent: "#F8669E",
+    accent: "#C46878",
   },
 ];
 
@@ -54,10 +54,10 @@ export function HowItWorks() {
           >
             HOW IT WORKS
           </div>
-          <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: "#F8669E" }}>
+          <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: "#C46878" }}>
             آلية العمل
           </p>
-          <h2 className="text-3xl font-black" style={{ color: "#333369", fontFamily: "'Cairo', 'Inter', sans-serif" }}>
+          <h2 className="text-3xl font-black" style={{ color: "#3D3A5C", fontFamily: "'Cairo', 'Inter', sans-serif" }}>
             كيف تعمل لمتنا؟
           </h2>
           <p className="mt-3" style={{ color: "#707070" }}>ستة خطوات بسيطة تحوّل فكرتك لفعالية لا تُنسى</p>
@@ -78,7 +78,7 @@ export function HowItWorks() {
               </div>
               <h3
                 className="font-bold text-lg mb-2"
-                style={{ color: "#333369", fontFamily: "'Cairo', 'Inter', sans-serif" }}
+                style={{ color: "#3D3A5C", fontFamily: "'Cairo', 'Inter', sans-serif" }}
               >
                 {step.title}
               </h3>

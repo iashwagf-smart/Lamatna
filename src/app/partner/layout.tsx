@@ -15,9 +15,9 @@ export default function PartnerLayout({ children }: { children: React.ReactNode 
       <PortalSidebar
         navItems={NAV}
         portalLabel="بوابة الشركاء"
-        accentColor="#F8669E"
-        gradientFrom="#F8669E"
-        gradientTo="#C83F74"
+        accentColor="#C46878"
+        gradientFrom="#C46878"
+        gradientTo="#C46878"
       />
       <div className="flex-1 mr-[260px] flex flex-col min-h-screen">
         {children}

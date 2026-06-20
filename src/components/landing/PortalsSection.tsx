@@ -6,7 +6,7 @@ const PORTALS = [
     title: "تطبيق العملاء",
     desc: "خطّط فعاليتك، صوّت مع مجموعتك، واجمع التكاليف بـ «قطّة».",
     href: "/user/dashboard",
-    accent: "#F8669E",
+    accent: "#C46878",
     cta: "ابدأ التخطيط",
   },
   {
@@ -22,7 +22,7 @@ const PORTALS = [
     title: "لوحة الإدارة",
     desc: "تحكّم في المنصة، راجع الموردين، وحلّ النزاعات من مكان واحد.",
     href: "/admin/dashboard",
-    accent: "#F8669E",
+    accent: "#C46878",
     cta: "لوحة التحكم",
   },
 ];
@@ -32,12 +32,12 @@ export function PortalsSection() {
     <section
       style={{
         padding: "80px 24px",
-        background: "linear-gradient(135deg, #333369 0%, #3A3089 60%, #1a1040 100%)",
+        background: "linear-gradient(135deg, #3D3A5C 0%, #3D3A5C 60%, #1a1040 100%)",
       }}
     >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: "#F8669E" }}>
+          <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: "#C46878" }}>
             البوابات
           </p>
           <h2
@@ -57,7 +57,7 @@ export function PortalsSection() {
               style={{
                 background: i === 1 ? "rgba(248,102,158,0.15)" : "rgba(255,255,255,0.05)",
                 border: `1px solid ${i === 1 ? "rgba(248,102,158,0.4)" : "rgba(255,255,255,0.1)"}`,
-                borderTop: `4px solid ${i === 1 ? "#F8669E" : "rgba(255,255,255,0.2)"}`,
+                borderTop: `4px solid ${i === 1 ? "#C46878" : "rgba(255,255,255,0.2)"}`,
               }}
             >
               <div
@@ -76,7 +76,7 @@ export function PortalsSection() {
               <Link
                 href={p.href}
                 className="nir-btn text-sm"
-                style={i === 1 ? { background: "#F8669E" } : {}}
+                style={i === 1 ? { background: "#C46878" } : {}}
               >
                 {p.cta}
               </Link>

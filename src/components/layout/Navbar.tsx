@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
@@ -22,7 +23,7 @@ export function Navbar() {
   return (
     <>
       {/* Top accent bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-[5px]" style={{ background: "linear-gradient(to right, #3A3089, #C83F74)" }} />
+      <div className="fixed top-0 left-0 right-0 z-50 h-[5px]" style={{ background: "linear-gradient(to right, #3D3A5C, #C46878, #E07840, #F0C040)" }} />
 
       <nav
         className={`fixed top-[5px] left-0 right-0 z-40 transition-all duration-300 ${
@@ -32,16 +33,15 @@ export function Navbar() {
       >
         <div className="max-w-6xl mx-auto px-6 h-[70px] flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div
-              className="w-10 h-10 flex items-center justify-center text-white font-black text-xl"
-              style={{ background: "linear-gradient(to right, #3A3089, #C83F74)" }}
-            >
-              ل
-            </div>
-            <span className="font-black text-xl" style={{ color: "#333369", fontFamily: "'Cairo', sans-serif" }}>
-              لمتنا
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="لمتنا"
+              width={80}
+              height={80}
+              className="object-contain"
+              priority
+            />
           </Link>
 
           {/* Nav Links - desktop */}
@@ -56,7 +56,7 @@ export function Navbar() {
                 {link.label}
                 <span
                   className="absolute bottom-[-4px] right-0 w-0 h-[2px] group-hover:w-full transition-all duration-300"
-                  style={{ background: "#F8669E" }}
+                  style={{ background: "#C46878" }}
                 />
               </Link>
             ))}
@@ -67,7 +67,7 @@ export function Navbar() {
             <Link
               href="/login"
               className="hidden md:block text-sm font-semibold transition-colors"
-              style={{ color: "#333369" }}
+              style={{ color: "#3D3A5C" }}
             >
               تسجيل الدخول
             </Link>
@@ -84,9 +84,9 @@ export function Navbar() {
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
             >
-              <span className={`block w-5 h-0.5 transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`} style={{ background: "#333369" }} />
-              <span className={`block w-5 h-0.5 transition-all ${menuOpen ? "opacity-0" : ""}`} style={{ background: "#333369" }} />
-              <span className={`block w-5 h-0.5 transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} style={{ background: "#333369" }} />
+              <span className={`block w-5 h-0.5 transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`} style={{ background: "#3D3A5C" }} />
+              <span className={`block w-5 h-0.5 transition-all ${menuOpen ? "opacity-0" : ""}`} style={{ background: "#3D3A5C" }} />
+              <span className={`block w-5 h-0.5 transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} style={{ background: "#3D3A5C" }} />
             </button>
           </div>
         </div>
@@ -108,7 +108,7 @@ export function Navbar() {
             <Link
               href="/login"
               className="block text-sm font-semibold py-2"
-              style={{ color: "#333369" }}
+              style={{ color: "#3D3A5C" }}
               onClick={() => setMenuOpen(false)}
             >
               تسجيل الدخول

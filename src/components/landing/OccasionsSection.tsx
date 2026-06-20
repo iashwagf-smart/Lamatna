@@ -39,10 +39,10 @@ export function OccasionsSection() {
           >
             OCCASIONS
           </div>
-          <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: "#F8669E" }}>
+          <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: "#C46878" }}>
             المناسبات
           </p>
-          <h2 className="text-3xl font-black" style={{ color: "#333369", fontFamily: "'Cairo', 'Inter', sans-serif" }}>
+          <h2 className="text-3xl font-black" style={{ color: "#3D3A5C", fontFamily: "'Cairo', 'Inter', sans-serif" }}>
             لكل مناسبة مسار مخصص
           </h2>
           <p className="mt-3" style={{ color: "#707070" }}>
@@ -56,20 +56,20 @@ export function OccasionsSection() {
               key={occ.label}
               className="flex items-center gap-2 px-5 py-2.5 bg-white text-sm font-bold cursor-pointer transition-all"
               style={{
-                color: "#333369",
+                color: "#3D3A5C",
                 border: "1px solid #e5e5e5",
                 boxShadow: "0 0 20px rgba(158,158,158,0.15)",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.background = "#333369";
+                el.style.background = "#3D3A5C";
                 el.style.color = "#fff";
-                el.style.borderColor = "#333369";
+                el.style.borderColor = "#3D3A5C";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.background = "#fff";
-                el.style.color = "#333369";
+                el.style.color = "#3D3A5C";
                 el.style.borderColor = "#e5e5e5";
               }}
             >

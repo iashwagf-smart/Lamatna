@@ -55,11 +55,11 @@ export function StatsSection() {
             <div
               key={stat.label}
               className="ev-card p-6 text-center"
-              style={{ borderTop: `4px solid ${i % 2 === 0 ? "#333369" : "#F8669E"}` }}
+              style={{ borderTop: `4px solid ${i % 2 === 0 ? "#3D3A5C" : "#C46878"}` }}
             >
               <div
                 className="text-3xl md:text-4xl font-black mb-2"
-                style={{ color: i % 2 === 0 ? "#333369" : "#F8669E", fontFamily: "'Cairo', 'Inter', sans-serif" }}
+                style={{ color: i % 2 === 0 ? "#3D3A5C" : "#C46878", fontFamily: "'Cairo', 'Inter', sans-serif" }}
               >
                 <Counter target={stat.value} suffix={stat.suffix} decimals={stat.decimals} />
               </div>

@@ -1,29 +1,50 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'ExpoArabic';
+  src: url('/ExpoArabic-Book.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
-  --foreground: #333369;
-  /* Eventiz palette */
-  --brand-purple: #333369;
-  --brand-purple-dark: #3A3089;
-  --brand-purple-light: #5552A0;
-  --brand-pink: #F8669E;
-  --brand-pink-dark: #C83F74;
+  --foreground: #3D3A5C;
+  /* Lamatna brand palette */
+  --brand-navy: #3D3A5C;
+  --brand-purple: #594E6A;
+  --brand-rose: #C46878;
+  --brand-orange: #E07840;
+  --brand-yellow: #F0C040;
+  /* Medium tones */
+  --brand-navy-mid: #6B6888;
+  --brand-purple-mid: #8C7EA0;
+  --brand-rose-mid: #D4909A;
+  --brand-orange-mid: #EAA070;
+  --brand-yellow-mid: #F5D060;
+  /* Light/pastel tones */
+  --brand-navy-light: #B8B5D4;
+  --brand-purple-light: #C8C0DC;
+  --brand-rose-light: #ECC8CC;
+  --brand-orange-light: #F5C8A0;
+  --brand-yellow-light: #F8E8A0;
+  /* Utility */
   --brand-gray: #707070;
   --brand-light-gray: #F7F7F7;
   --brand-dark: #101010;
   --brand-cream: #ffffff;
   --brand-light: #F7F7F7;
   /* Gradient */
-  --gradient-main: linear-gradient(to right, #3A3089, #C83F74);
-  --gradient-hover: linear-gradient(to right, #3A3089, #5d0326);
-  /* Pattern bar colors */
-  --pattern-1: #333369;
-  --pattern-2: #F8669E;
-  --pattern-3: #3A3089;
-  --pattern-4: #C83F74;
-  --pattern-5: #707070;
-  --pattern-6: #F8669E;
+  --gradient-main: linear-gradient(to right, #3D3A5C, #C46878);
+  --gradient-hover: linear-gradient(to right, #594E6A, #E07840);
+  /* Pattern bar */
+  --pattern-1: #3D3A5C;
+  --pattern-2: #C46878;
+  --pattern-3: #E07840;
+  --pattern-4: #F0C040;
+  --pattern-5: #594E6A;
+  --pattern-6: #C46878;
 }
 
 @theme inline {
@@ -46,23 +67,23 @@ html {
 body {
   background: var(--background);
   color: var(--brand-gray);
-  font-family: 'Cairo', 'Poppins', sans-serif;
+  font-family: 'ExpoArabic', 'Cairo', sans-serif;
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Cairo', 'Inter', sans-serif;
+  font-family: 'ExpoArabic', 'Cairo', sans-serif;
   font-weight: 700;
-  color: var(--brand-purple);
+  color: var(--brand-navy);
   line-height: 1.22em;
   margin: 0 0 1rem;
 }
 
 /* Eventiz Button Style */
 .nir-btn {
-  background: var(--brand-pink);
+  background: var(--brand-rose);
   color: #fff !important;
   border-radius: 0px;
   box-shadow: 0px 0px 0px 4px rgba(255, 255, 255, 0.1);
@@ -80,7 +101,7 @@ h1, h2, h3, h4, h5, h6 {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--brand-purple);
+  background: var(--brand-navy);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.3s ease;
@@ -95,7 +116,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nir-btn-dark {
-  background: var(--brand-purple);
+  background: var(--brand-navy);
   color: #fff !important;
   border-radius: 0px;
   box-shadow: 0px 0px 0px 4px rgba(255, 255, 255, 0.1);
@@ -113,7 +134,7 @@ h1, h2, h3, h4, h5, h6 {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--brand-pink);
+  background: var(--brand-rose);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.3s ease;
@@ -141,7 +162,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 110px;
   color: rgba(255, 255, 255, 0);
   -webkit-text-stroke: 0.2px;
-  -webkit-text-stroke-color: #333369;
+  -webkit-text-stroke-color: #3D3A5C;
   opacity: 0.12;
   line-height: 1;
   pointer-events: none;

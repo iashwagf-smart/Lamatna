@@ -45,7 +45,7 @@ export default function PartnerApplyPage() {
           <>
             <div className="text-center mb-10">
               <div className="text-5xl mb-4">🏪</div>
-              <h1 className="text-3xl font-black" style={{ color: "#333369" }}>
+              <h1 className="text-3xl font-black" style={{ color: "#3D3A5C" }}>
                 انضم كشريك في لمتنا
               </h1>
               <p className="text-gray-500 mt-2">
@@ -62,7 +62,7 @@ export default function PartnerApplyPage() {
               ].map((b) => (
                 <div key={b.title} className="bg-[#F7F7F7] rounded-2xl p-4 text-center">
                   <div className="text-2xl mb-2">{b.icon}</div>
-                  <div className="font-bold text-xs" style={{ color: "#333369" }}>{b.title}</div>
+                  <div className="font-bold text-xs" style={{ color: "#3D3A5C" }}>{b.title}</div>
                   <div className="text-xs text-gray-400 mt-1">{b.desc}</div>
                 </div>
               ))}
@@ -73,24 +73,24 @@ export default function PartnerApplyPage() {
                 <div>
                   <label className="text-sm font-semibold text-gray-700 block mb-2">اسم المنشأة *</label>
                   <input value={form.businessName} onChange={(e) => update("businessName", e.target.value)}
-                    placeholder="استوديو نور" className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#333369]" />
+                    placeholder="استوديو نور" className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#3D3A5C]" />
                 </div>
                 <div>
                   <label className="text-sm font-semibold text-gray-700 block mb-2">اسم المسؤول *</label>
                   <input value={form.contactName} onChange={(e) => update("contactName", e.target.value)}
-                    placeholder="أحمد النور" className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#333369]" />
+                    placeholder="أحمد النور" className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#3D3A5C]" />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-semibold text-gray-700 block mb-2">الجوال *</label>
                   <input type="tel" dir="ltr" value={form.phone} onChange={(e) => update("phone", e.target.value)}
-                    placeholder="+966..." className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#333369] text-center font-mono" />
+                    placeholder="+966..." className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#3D3A5C] text-center font-mono" />
                 </div>
                 <div>
                   <label className="text-sm font-semibold text-gray-700 block mb-2">البريد الإلكتروني</label>
                   <input type="email" dir="ltr" value={form.email} onChange={(e) => update("email", e.target.value)}
-                    placeholder="info@example.com" className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#333369] text-center" />
+                    placeholder="info@example.com" className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#3D3A5C] text-center" />
                 </div>
               </div>
               <div>
@@ -98,7 +98,7 @@ export default function PartnerApplyPage() {
                 <div className="grid grid-cols-3 gap-2">
                   {CATEGORIES.map((c) => (
                     <button key={c} onClick={() => update("category", c)}
-                      className={`py-2 px-3 rounded-xl text-xs font-bold border-2 transition-all ${form.category === c ? "border-[#F8669E] bg-[#FFF0F4] text-[#F8669E]" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}>
+                      className={`py-2 px-3 rounded-xl text-xs font-bold border-2 transition-all ${form.category === c ? "border-[#C46878] bg-[#FFF0F4] text-[#C46878]" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}>
                       {CATEGORY_LABELS[c]}
                     </button>
                   ))}
@@ -107,16 +107,16 @@ export default function PartnerApplyPage() {
               <div>
                 <label className="text-sm font-semibold text-gray-700 block mb-2">المدينة</label>
                 <input value={form.city} onChange={(e) => update("city", e.target.value)}
-                  placeholder="الرياض" className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#333369]" />
+                  placeholder="الرياض" className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#3D3A5C]" />
               </div>
               <div>
                 <label className="text-sm font-semibold text-gray-700 block mb-2">ملاحظات إضافية</label>
                 <textarea value={form.notes} onChange={(e) => update("notes", e.target.value)}
-                  rows={3} placeholder="صِف خدماتك..." className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#333369] resize-none" />
+                  rows={3} placeholder="صِف خدماتك..." className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-[#3D3A5C] resize-none" />
               </div>
               <button onClick={submit} disabled={loading || !form.businessName || !form.phone || !form.category}
                 className="w-full py-4 rounded-2xl font-black text-white text-lg disabled:opacity-50 transition-transform hover:scale-[1.02]"
-                style={{ background: "linear-gradient(to right, #3A3089, #C83F74)" }}>
+                style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)" }}>
                 {loading ? "جارٍ الإرسال..." : "أرسل الطلب الآن"}
               </button>
             </div>
@@ -124,7 +124,7 @@ export default function PartnerApplyPage() {
         ) : (
           <div className="text-center py-20">
             <div className="text-6xl mb-6">🎉</div>
-            <h2 className="text-2xl font-black mb-3" style={{ color: "#333369" }}>طلبك وصلنا!</h2>
+            <h2 className="text-2xl font-black mb-3" style={{ color: "#3D3A5C" }}>طلبك وصلنا!</h2>
             <p className="text-gray-500">سيتواصل معك فريقنا خلال ٢٤-٤٨ ساعة. شكراً لاهتمامك بالانضمام لمنصة لمتنا.</p>
           </div>
         )}

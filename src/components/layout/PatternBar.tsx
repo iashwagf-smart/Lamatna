@@ -1,8 +1,8 @@
 export function PatternBar({ className = "" }: { className?: string }) {
   const colors = [
-    "#333369", "#F8669E", "#3A3089", "#C83F74",
-    "#333369", "#F8669E", "#3A3089", "#C83F74",
-    "#333369", "#F8669E", "#3A3089", "#C83F74",
+    "#3D3A5C", "#594E6A", "#C46878", "#E07840", "#F0C040",
+    "#3D3A5C", "#594E6A", "#C46878", "#E07840", "#F0C040",
+    "#3D3A5C", "#C46878",
   ];
   return (
     <div className={`flex h-[6px] w-full ${className}`}>
