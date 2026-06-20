@@ -37,8 +37,8 @@ export function Navbar() {
             <Image
               src="/logo.png"
               alt="لمتنا"
-              width={80}
-              height={80}
+              width={44}
+              height={44}
               className="object-contain"
               priority
             />
