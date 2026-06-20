@@ -20,7 +20,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     where: { eventId: id, status: "CONFIRMED" },
   });
 
-  const totalLocked = orders.reduce((sum, o) => sum + o.amount, 0);
+  const totalLocked = orders.reduce((sum: number, o) => sum + o.amount, 0);
 
   const escrow = await prisma.escrow.create({
     data: {
