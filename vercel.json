@@ -1,16 +1,1 @@
-{
-  "crons": [
-    {
-      "path": "/api/cron/check-escrow",
-      "schedule": "0 * * * *"
-    },
-    {
-      "path": "/api/cron/check-gattah",
-      "schedule": "*/15 * * * *"
-    },
-    {
-      "path": "/api/cron/check-inventory",
-      "schedule": "0 2 * * *"
-    }
-  ]
-}
+{}
