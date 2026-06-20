@@ -13,8 +13,8 @@ export async function GET() {
     include: { order: true },
   });
 
-  const ids = staleEntries.map((e) => e.id);
-  const orderIds = staleEntries.map((e) => e.orderId);
+  const ids = staleEntries.map((e: { id: string }) => e.id);
+  const orderIds = staleEntries.map((e: { orderId: string }) => e.orderId);
 
   if (ids.length > 0) {
     await prisma.$transaction([
