@@ -27,8 +27,14 @@ export async function loginWithOtp(email: string, otp: string, callbackUrl: stri
   }
 
   const secret = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET!;
+  const isProduction = process.env.NODE_ENV === "production";
+  const cookieName = isProduction
+    ? "__Secure-authjs.session-token"
+    : "authjs.session-token";
+
   const sessionToken = await encode({
     secret,
+    salt: cookieName,
     token: {
       sub: user.id,
       id: user.id,
@@ -40,11 +46,6 @@ export async function loginWithOtp(email: string, otp: string, callbackUrl: stri
   });
 
   const cookieStore = await cookies();
-  const isProduction = process.env.NODE_ENV === "production";
-  const cookieName = isProduction
-    ? "__Secure-authjs.session-token"
-    : "authjs.session-token";
-
   cookieStore.set(cookieName, sessionToken, {
     httpOnly: true,
     secure: isProduction,
