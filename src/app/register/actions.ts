@@ -25,8 +25,14 @@ export async function registerWithOtp(email: string, otp: string, role: string) 
   await prisma.user.update({ where: { id: user.id }, data: { verified: true } });
 
   const secret = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET!;
+  const isProduction = process.env.NODE_ENV === "production";
+  const cookieName = isProduction
+    ? "__Secure-authjs.session-token"
+    : "authjs.session-token";
+
   const sessionToken = await encode({
     secret,
+    salt: cookieName,
     token: {
       sub: user.id,
       id: user.id,
@@ -38,11 +44,6 @@ export async function registerWithOtp(email: string, otp: string, role: string) 
   });
 
   const cookieStore = await cookies();
-  const isProduction = process.env.NODE_ENV === "production";
-  const cookieName = isProduction
-    ? "__Secure-authjs.session-token"
-    : "authjs.session-token";
-
   cookieStore.set(cookieName, sessionToken, {
     httpOnly: true,
     secure: isProduction,

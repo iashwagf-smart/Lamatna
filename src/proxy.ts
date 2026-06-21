@@ -26,9 +26,16 @@ export async function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
+  const isProduction = process.env.NODE_ENV === "production";
+  const cookieName = isProduction
+    ? "__Secure-authjs.session-token"
+    : "authjs.session-token";
+
   const token = await getToken({
     req,
     secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+    salt: cookieName,
+    cookieName,
   });
 
   if (!token) {
