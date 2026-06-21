@@ -15,7 +15,6 @@ const PUBLIC_PATHS = [
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Allow public paths, static files, and API routes
   if (
     PUBLIC_PATHS.includes(pathname) ||
     pathname.startsWith("/api/") ||
@@ -42,6 +41,16 @@ export async function proxy(req: NextRequest) {
     const loginUrl = new URL("/login", req.url);
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);
+  }
+
+  const role = token.role as string | undefined;
+
+  // Role-based portal protection
+  if (pathname.startsWith("/admin") && role !== "ADMIN") {
+    return NextResponse.redirect(new URL("/user/dashboard", req.url));
+  }
+  if (pathname.startsWith("/partner") && role !== "VENDOR" && role !== "ADMIN") {
+    return NextResponse.redirect(new URL("/user/dashboard", req.url));
   }
 
   return NextResponse.next();

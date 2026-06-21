@@ -1,12 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendOtpEmail } from "@/lib/mailer";
+import { rateLimit } from "@/lib/rateLimit";
 
 function generateOtp() {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "unknown";
+  const { allowed } = rateLimit(`register:${ip}`, 3, 60 * 60 * 1000); // 3 per hour
+  if (!allowed) {
+    return NextResponse.json({ error: "كثرة المحاولات. حاول بعد ساعة." }, { status: 429 });
+  }
+
   const { name, email, role } = await req.json();
 
   if (!name || !email) {
