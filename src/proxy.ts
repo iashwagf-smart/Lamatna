@@ -31,12 +31,11 @@ export async function proxy(req: NextRequest) {
     secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
   });
 
-  // Auth temporarily disabled for testing
-  // if (!token) {
-  //   const loginUrl = new URL("/login", req.url);
-  //   loginUrl.searchParams.set("callbackUrl", pathname);
-  //   return NextResponse.redirect(loginUrl);
-  // }
+  if (!token) {
+    const loginUrl = new URL("/login", req.url);
+    loginUrl.searchParams.set("callbackUrl", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
 
   return NextResponse.next();
 }
