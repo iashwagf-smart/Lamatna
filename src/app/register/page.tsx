@@ -38,17 +38,8 @@ export default function RegisterPage() {
   async function handleVerifyOtp() {
     setLoading(true);
     setError("");
-    const result = await signIn("email-otp", {
-      email,
-      otp,
-      redirect: false,
-    });
-    setLoading(false);
-    if (result?.error) {
-      setError("الرمز غير صحيح أو منتهي الصلاحية.");
-    } else {
-      window.location.href = role === "VENDOR" ? "/partner/dashboard" : "/user/dashboard";
-    }
+    const dest = role === "VENDOR" ? "/partner/dashboard" : "/user/dashboard";
+    await signIn("email-otp", { email, otp, callbackUrl: dest });
   }
 
   return (

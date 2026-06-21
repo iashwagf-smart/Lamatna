@@ -3,11 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { PatternBar } from "@/components/layout/PatternBar";
 
 export function LoginForm() {
-  const router = useRouter();
   const params = useSearchParams();
   const callbackUrl = params.get("callbackUrl") || "/user/dashboard";
 
@@ -27,24 +26,19 @@ export function LoginForm() {
       body: JSON.stringify({ email }),
     });
     setLoading(false);
-    if (res.ok) setStep("otp");
-    else setError("تعذّر إرسال الرمز. تحقق من بريدك الإلكتروني.");
+    if (res.ok) {
+      setStep("otp");
+    } else {
+      const data = await res.json();
+      setError(data.error || "تعذّر إرسال الرمز");
+    }
   }
 
   async function verifyOtp() {
     setLoading(true);
     setError("");
-    const result = await signIn("email-otp", {
-      email,
-      otp,
-      redirect: false,
-    });
-    setLoading(false);
-    if (result?.error) {
-      setError("الرمز غير صحيح أو منتهي الصلاحية.");
-    } else {
-      window.location.href = callbackUrl;
-    }
+    // Let NextAuth handle redirect — it will go to callbackUrl on success, /login on error
+    await signIn("email-otp", { email, otp, callbackUrl });
   }
 
   return (
@@ -56,7 +50,7 @@ export function LoginForm() {
             <Link href="/" className="inline-flex items-center gap-2 justify-center">
               <div
                 className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-2xl"
-                style={{ background: "linear-gradient(to right, #3D3A5C, #3D3A5C)" }}
+                style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)" }}
               >
                 ل
               </div>
@@ -80,6 +74,11 @@ export function LoginForm() {
             <div className="flex-1 h-px bg-gray-200" />
           </div>
 
+          {params.get("error") && (
+            <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">
+              الرمز غير صحيح أو منتهي الصلاحية
+            </div>
+          )}
           {error && (
             <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">{error}</div>
           )}
@@ -91,6 +90,7 @@ export function LoginForm() {
                 <input
                   type="email" dir="ltr" value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && sendOtp()}
                   placeholder="example@email.com"
                   className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono focus:outline-none focus:border-[#3D3A5C] transition-colors"
                 />
@@ -111,6 +111,7 @@ export function LoginForm() {
               <input
                 type="text" dir="ltr" value={otp}
                 onChange={(e) => setOtp(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && otp.length === 6 && verifyOtp()}
                 placeholder="XXXXXX" maxLength={6}
                 className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-center font-mono text-2xl tracking-widest focus:outline-none focus:border-[#3D3A5C]"
               />
@@ -119,7 +120,7 @@ export function LoginForm() {
                 className="w-full py-3 rounded-2xl font-bold text-white disabled:opacity-50"
                 style={{ background: "linear-gradient(to right, #3D3A5C, #C46878)" }}
               >
-                {loading ? "جارٍ التحقق..." : "تحقق ودخول"}
+                {loading ? "جارٍ التحقق..." : "دخول"}
               </button>
               <button onClick={() => setStep("email")} className="w-full text-sm text-gray-500 hover:text-[#3D3A5C]">
                 تعديل البريد الإلكتروني
