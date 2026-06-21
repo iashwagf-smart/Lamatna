@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
 import { PatternBar } from "@/components/layout/PatternBar";
+import { registerWithOtp } from "./actions";
 
 type Role = "CLIENT" | "VENDOR";
 
@@ -38,8 +38,12 @@ export default function RegisterPage() {
   async function handleVerifyOtp() {
     setLoading(true);
     setError("");
-    const dest = role === "VENDOR" ? "/partner/dashboard" : "/user/dashboard";
-    await signIn("email-otp", { email, otp, callbackUrl: dest });
+    const result = await registerWithOtp(email, otp, role);
+    if (result?.error) {
+      setLoading(false);
+      setError(result.error);
+    }
+    // On success: server action redirects automatically
   }
 
   return (

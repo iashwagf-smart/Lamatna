@@ -5,6 +5,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { PatternBar } from "@/components/layout/PatternBar";
+import { loginWithOtp } from "./actions";
 
 export function LoginForm() {
   const params = useSearchParams();
@@ -37,8 +38,12 @@ export function LoginForm() {
   async function verifyOtp() {
     setLoading(true);
     setError("");
-    // Let NextAuth handle redirect — it will go to callbackUrl on success, /login on error
-    await signIn("email-otp", { email, otp, callbackUrl });
+    const result = await loginWithOtp(email, otp, callbackUrl);
+    if (result?.error) {
+      setLoading(false);
+      setError(result.error);
+    }
+    // On success: server action redirects automatically (throws NEXT_REDIRECT)
   }
 
   return (
@@ -74,11 +79,6 @@ export function LoginForm() {
             <div className="flex-1 h-px bg-gray-200" />
           </div>
 
-          {params.get("error") && (
-            <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">
-              الرمز غير صحيح أو منتهي الصلاحية
-            </div>
-          )}
           {error && (
             <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">{error}</div>
           )}
@@ -123,7 +123,7 @@ export function LoginForm() {
                 {loading ? "جارٍ التحقق..." : "دخول"}
               </button>
               <button onClick={() => setStep("email")} className="w-full text-sm text-gray-500 hover:text-[#3D3A5C]">
-                تعديل البريد الإلكتروني
+                تعديل البريد
               </button>
             </div>
           )}
